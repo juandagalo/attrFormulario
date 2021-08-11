@@ -1,0 +1,550 @@
+<H3>Información del usuario</H3>
+<hr class="my-4">
+<form>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="userId">Identificación</label>
+                <input type="text" class="form-control" id="userId" aria-describedby="userIdType" disabled>
+                <small id="userIdType" class="form-text text-muted">Tipo de identificación: </small>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="userBirthday">Fecha de nacimiento</label>
+                <input type="text" class="form-control" id="userBirthday" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="userAge">Edad</label>
+                <input type="text" class="form-control" id="userAge">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="userEtnia">Etnia</label>
+                <input type="text" class="form-control" id="userEtnia" disabled>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="userSex">Sexo</label>
+                <input type="text" class="form-control" id="userSex" disabled>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userOccupation">Ocupación</label>
+                <input type="text" class="form-control" id="userOccupation">
+            </div>
+        </div>
+    </div>
+</form>
+
+<br>
+<br>
+
+<H3>Variables Clínicas</H3>
+<hr class="my-4">
+<form>
+
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userConsultDate">Fecha de primera consulta en el programa de falla cardíaca </label>
+                <input type="text" class="form-control" id="userConsultDate">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="userComorbidity">Comorbilidades</label>
+                <select id="userComorbidity" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option>Diabetes</option>
+                  <option>Hipertensión arterial</option>
+                  <option>Cáncer</option>
+                  <option>Enfermedad coronaria</option>
+                  <option>Hipotiriodismo</option>
+                  <option>EPOC </option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userDispositivoCardiaco">Implante de dispositivos cardíacos</label>
+                <select id="userDispositivoCardiaco" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option (click)="mostrarDispositivosCardiacos(true)">Si</option>
+                  <option (click)="mostrarDispositivosCardiacos(false)">No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="implanteCardiaco">
+            <div class="form-group">
+                <label for="userDispositivoCardiacoType">Tipo de dispositivos cardíacos</label>
+                <select id="userDispositivoCardiacoType" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option>Válvula aórtica biologica</option>
+                  <option>marcapasos Uni o bicameral</option>
+                  <option>Cardiodesfibrilador</option>
+                  <option>Marcapasos tricameral o resincronizador cardíaco (CRT)</option>
+                  <option>Resincronizador cardíaco con desfibrilador (CRT-D)</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userSindromeClinico">Forma de presentación del síndrome clínico</label>
+                <select id="userSindromeClinico" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option (click)="otroSindromeClinico(false)">Falla Cardíaca</option>
+                  <option (click)="otroSindromeClinico(false)">Arritmias cardíacas</option>
+                  <option (click)="otroSindromeClinico(false)">Estenosis Aórtica</option>
+                  <option (click)="otroSindromeClinico(true)">Otro</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="tieneOtroSindromeClinico">
+            <div class="form-group">
+                <label for="userSindromeClinicootro">¿Cual?</label>
+                <input type="text" class="form-control" id="userSindromeClinicootro">
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="userManifestacionesExtracardiacas">Manifestaciones extracardíacas</label>
+                <select id="userManifestacionesExtracardiacas" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option (click)="mostrarManifestacionesExtracardiacas(true)">Si</option>
+                  <option (click)="mostrarManifestacionesExtracardiacas(false)">No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="tieneManifestacionesExtracardiacas">
+            <div class="form-group">
+                <label for="userManifestacionesExtracardiacasType">Tipo de manifestaciones extracardíacas</label>
+                <select id="userManifestacionesExtracardiacasType" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option (click)="otrasManifestacionesExtracardiacas(false)">Sindrome del tunel del carpo</option>
+                  <option (click)="otrasManifestacionesExtracardiacas(false)">Polineuropatía</option>
+                  <option (click)="otrasManifestacionesExtracardiacas(false)">Disautonomia</option>
+                  <option (click)="otrasManifestacionesExtracardiacas(false)">Afectación ocular</option>
+                  <option (click)="otrasManifestacionesExtracardiacas(true)">Otro</option>
+                </select>
+            </div>
+        </div>
+        <div class="col" *ngIf="tieneOtrasManifestacionesExtracardiacas">
+            <div class="form-group">
+                <label for="userManifestacionesExtracardiacasOtroTipo">¿Cual?</label>
+                <input type="text" class="form-control" id="userManifestacionesExtracardiacasOtroTipo">
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+<br>
+<br>
+<H3>Biomarcadores</H3>
+<hr>
+<form>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="userProBNP">NT-proBNP</label>
+                <input type="number" class="form-control" id="userProBNP">
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userTroponinT">Troponin T</label>
+                <input type="number" class="form-control" id="userTroponinT">
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<br>
+<br>
+<H3>Ecocardiografía</H3>
+<hr>
+<form>
+
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userGrosorVentriculoIzquierdo">Grosor de cualquier pared del ventrículo izquierdo ≥ 14 mm</label>
+                <select id="userGrosorVentriculoIzquierdo" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option (click)="mostrarGrosorVentriculoIzquierdo(true)">Si</option>
+                  <option (click)="mostrarGrosorVentriculoIzquierdo(false)">No</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="tieneGrosorVentriculoIzquierdo">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userEjectionFraction ">Fracción de eyección</label>
+                <input type="number" class="form-control" id="userEjectionFraction">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="userTroponinT">Deformación longitudinal apical</label>
+                <input type="number" class="form-control" id="userTroponinT">
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+<br>
+<br>
+<H3>Imágenes diagnósticas confirmatorias</H3>
+<hr>
+<form>
+
+    <div class="row">
+
+        <div class="col">
+
+            <div class="form-group">
+                <label for="userResonanciaMagnetica">Resonancia Magnética nuclear con Gadolinio</label>
+                <select id="userResonanciaMagnetica" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option (click)="mostrarResonanciaMagnetica(true)">Si</option>
+                  <option (click)="mostrarResonanciaMagnetica(false)">No</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="col" *ngIf="tieneResonanciaMagnetica">
+
+            <div class="form-group">
+                <label for="userTipoResonanciaMagnetica">Tipo de anormalidad de la resonancia Magnética nuclear con Gadolinio</label>
+                <select id="userTipoResonanciaMagnetica" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>Aumento del volúmen extracelular (VEC)</option>
+                    <option>Elevación de T1 Nativo</option>
+                    <option>Realce tardio de gadolinio difuso</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userGammagrafiaOsea">Gammagrafía ósea con Tc-HMDP o pirofosfato (PYP)</label>
+                <select id="userGammagrafiaOsea" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>No captación</option>
+                    <option>Leve</option>
+                    <option>Moderada</option>
+                    <option>Severa</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+
+<br>
+<br>
+<H3>Caracterización genética</H3>
+<hr>
+<form>
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userAmiloidosisPrimaria">Amiloidosis primaria (AL)</label>
+                <select id="userAmiloidosisPrimaria" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>Si</option>
+                    <option>No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userAttr">ATTR-CM</label>
+                <select id="userAttr" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option (click)="mostrarAttr(true)">Si</option>
+                    <option (click)="mostrarAttr(false)">No</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="tieneAtter">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userFechaAttr">Fecha de diagnóstico de ATTR</label>
+                <input type="text" class="form-control" id="userFechaAttr">
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userTipoAttr">Tipo ATTR-CM</label>
+                <select id="userTipoAttr" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>Wild type (wt)</option>
+                    <option>Hereditary (m)</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+<br>
+<br>
+<H3>Manejo medico</H3>
+<hr>
+<form>
+
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userInvervencionFarmacologica">Intervención farmacológica </label>
+                <select id="userInvervencionFarmacologica" class="form-control">
+                  <option selected hidden>Seleccionar</option>
+                  <option (click)="otraInvervencionFarmacologica(false)">Tafamidis</option>
+                  <option (click)="otraInvervencionFarmacologica(false)">Diflunisal</option>
+                  <option (click)="otraInvervencionFarmacologica(false)">Doxiciclina</option>
+                  <option (click)="otraInvervencionFarmacologica(true)">Otro</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col" *ngIf="tieneOtraInvervencionFarmacologica">
+            <div class="form-group">
+                <label for="userOtraInvervencionFarmacologica">¿Cual?</label>
+                <input type="text" class="form-control" id="userOtraInvervencionFarmacologica">
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+<br>
+<br>
+<H1 class="text-center">Hospitalizaciones</H1>
+<hr>
+<div>
+
+    <form>
+        <div class="row">
+
+            <div class="col">
+
+                <div class="form-group">
+                    <label for="userHospitalizacionesFCardiaca">Hospitalizaciones por falla cardiaca</label>
+                    <select id="userHospitalizacionesFCardiaca" class="form-control">
+                        <option selected hidden>Seleccionar</option>
+                        <option (click)="mostrarHospitalizacionesFCardiaca(true)">Si</option>
+                        <option (click)="mostrarHospitalizacionesFCardiaca(false)">No</option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row" *ngIf="tieneHospitalizacionesFCardiaca">
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="userFechaIngresoUltHsptzn">Fecha del ingreso a ultima hospitalización</label>
+                    <input type="text" class="form-control" id="userFechaIngresoUltHsptzn">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="userFechaEgresoUltHsptzn">Fecha de egreso de la ultima hospitalización</label>
+                    <input type="text" class="form-control" id="userFechaEgresoUltHsptzn">
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="tieneHospitalizacionesFCardiaca">
+
+            <div class="col">
+                <div class="form-group">
+                    <label for="userDiagnosticoIngresoUltHsptzn">Diagnóstico de ingreso de ultima hospitalización</label>
+                    <input type="text" class="form-control" id="userDiagnosticoIngresoUltHsptzn">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="userDiagnosticoEgresoUltHsptzn">Diagnóstico de egreso de ultima hospitalización</label>
+                    <input type="text" class="form-control" id="userDiagnosticoEgresoUltHsptzn">
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+<br>
+<br>
+<H3>CALIDAD DE VIDA - CONTROLES</H3>
+<hr>
+<form>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="userVisitaControl">Fecha de visita control</label>
+                <input type="text" class="form-control" id="userVisitaControl">
+            </div>
+        </div>
+    </div>
+</form>
+
+<br>
+<H6 class="text-center">Cuestionario EQ- 5D</H6>
+<hr>
+<form>
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userMovilidad">Movilidad</label>
+                <select id="userMovilidad" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>No tengo problemas para caminar</option>
+                    <option>Tengo algunos problemas para caminar</option>
+                    <option>Tengo que estar en la cama</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userDolorMalestar">Dolor/malestar</label>
+                <select id="userDolorMalestar" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>No tengo dolor ni malestar</option>
+                    <option>Tengo moderado dolor o malestar</option>
+                    <option>Tengo mucho dolor y malestar</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userAnsiedadDepresión">Ansiedad/Depresión</label>
+                <select id="userAnsiedadDepresión" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>No estoy ansioso ni deprimido</option>
+                    <option>Estoy moderadamente ansioso o deprimido</option>
+                    <option>Estoy muy ansioso o deprimido</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userMovilidad">Cuidado personal</label>
+                <select id="userMovilidad" class="form-control">
+                    <option>No tengo problemas con el cuidado personal</option>
+                    <option>Tengo algunos problemas para lavarme o vestirme</option>
+                    <option>Soy incapaz de lavarme o vestime</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label for="userDolorMalestar">Dolor/malestar</label>
+                <select id="userDolorMalestar" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>No tengo problemas para realizar mis actividades cotidianas</option>
+                    <option>Tengo algunos problemas para realizar mis actividades cotidianas</option>
+                    <option>Soy incapaz de realizar mis actividades cotidianas</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<br>
+<H6 class="text-center">Cuestionario Minnesota Living with Heart Failure (MLFH) </H6>
+<hr>
+
+<form>
+    <div class="row" *ngFor="let filaFormulario of formularioMlfh">
+
+        <div class="col" *ngFor="let columnaFormulario of filaFormulario">
+            <div class="form-group">
+                <label for="userMovilidad">{{columnaFormulario.name}}</label>
+                <select id="userMovilidad" class="form-control">
+                    <option selected hidden>Seleccionar</option>
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+</form>

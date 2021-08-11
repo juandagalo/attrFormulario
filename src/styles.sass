@@ -1,1 +1,530 @@
 /* You can add global styles to this file, and also import other style files */
+// @import "/imports/_Colors.sass"
+
+$primary-blue: #212121
+$secondary-blue: #FAFAFA
+$third-blue: #044E90
+$fourth-blue: #004c8c
+$fifth-blue: #6080CC
+$hover-blue: #0277BD
+$primary-red: #d2322d
+$secondary-red: #b61827
+$primary-white: #FFF
+$primary-grey: #EAEAEA
+$secondary-grey: #484848
+$dark-transparent: rgba(21, 21, 21, 0.7)
+
+th
+    background-color: $primary-grey
+    color: $primary-blue
+
+table .table-bordered .data-table tbody td
+    padding: 2px
+
+table thead:first-child tr:first-child th
+    padding: 3px
+
+tbody
+    background-color: $primary-white
+    color: $primary-blue
+
+.data-table-info
+    color: $primary-red
+    font-weight: bold
+    font-size: small
+    float: right
+
+.data-table-filter label
+    color: $primary-blue
+    font-weight: bold !important
+    padding-top: 5px
+
+.data-table-wrapper .data-table-filter
+    float: left
+    text-align: left
+
+.pagination
+    float: left
+    text-align: left
+
+.data-table-wrapper .data-table-length
+    float: right
+
+.data.table-filter input
+    padding-top: 1px
+    padding-bottom: 1px
+    padding-left: 2px
+    padding-right: 2px
+    height: 22px
+
+.containerBandeja
+    width: 100%
+    padding: 20px
+    margin-right: auto
+    margin-left: auto
+
+.react-bootstrap-table
+    overflow-x: auto !important
+
+.siam-text-input
+    padding-top: 3px
+    padding-bottom: 3px
+    padding-left: 3px
+    padding-right: 3px
+    height: 25px
+
+.siam-select-input
+    padding-top: 3px
+    padding-bottom: 3px
+    padding-left: 3px
+    padding-right: 3px
+    height: 31px !important
+
+.siam-buttons-box
+    padding-top: 5px
+    padding-bottom: 5px
+
+.navbar
+    background-color: $primary-blue
+    margin-bottom: 0
+    border-color: $primary-blue
+    border-radius: 0
+    color: $primary-white
+
+.siam-panel
+    background-color: $secondary-blue
+    margin-bottom: 10px
+    box-shadow: 1px 1px 7px grey
+
+
+.siam-panel-head-2
+    text-align: left
+    padding-left: 15px
+    cursor: pointer
+
+.siam-panel > .siam-panel-head
+    background-color: $third-blue
+    color: $primary-white
+    padding-top: 4px
+    height: 30px
+    border-top-left-radius: 4px
+    border-top-right-radius: 4px
+
+.siam-icon-button
+    cursor: pointer
+
+.siam-panel-body
+    padding-top: 3px
+    padding-bottom: 3px
+    padding-left: 5px
+    padding-right: 5px
+    border-bottom-left-radius: 4px
+    border-bottom-right-radius: 4px
+    transition: 0.3s
+
+.panel-siam
+    border-top: 0
+    border-bottom-left-radius: 3px
+    border-top-right-radius: 3px
+    padding-left: 8px !important
+    padding-right: 8px !important
+    padding-bottom: 10px !important
+    margin-bottom: 20px
+
+.siam-title
+    background-color: $primary-blue
+    margin-bottom: 0
+    border-color: $primary-blue
+    border-radius: 0
+    color: $primary-white
+    padding-top: 7px
+    padding-bottom: 7px
+    text-align: center
+    font-size: medium
+    font-weight: bold
+    font-family: Verdana, Arial, 'Times New Roman'
+
+.siam-container
+    background-color: $secondary-blue
+    padding-bottom: 1px
+    margin-bottom: 30px
+    margin-top: 15px
+
+.siam-start-end
+    display: flex
+    justify-content: flex-start
+    align-items: flex-end
+    margin: 0
+
+.siam-input-file
+    position: relative
+    overflow: hidden
+    display: inline-block
+    display: flex
+    align-items: flex-end
+
+    .button-file
+        color: $primary-white
+        background-color: $third-blue
+        padding: 3px 10px
+        border-radius: 4px
+        border: 0
+        display: flex
+        align-items: center
+
+        span
+            font-size: 17px
+
+    input
+        position: absolute
+        left: 0
+        bottom: 0
+        opacity: 1
+        background-color: lightcoral
+        z-index: -1
+        width: 1px
+        height: 1px
+
+h1, h2, h3, h4, h5
+    font-weight: bold
+    text-align: center
+
+.siam-input-label
+    font-size: 12px
+    color: $primary-blue
+    font-weight: bold
+    display: inline !important
+
+.siam-button
+    border: 0 !important
+    background-color: $third-blue !important
+    transition: 0.4s
+
+.siam-button:hover
+    background-color: $hover-blue !important
+    transition: 0.5s
+
+.label-space-top
+    padding-top: 8px
+    padding-bottom: 0
+
+.siam-label-error
+    color: red
+    font-size: 12px
+
+.siam-check
+    display: flex
+    justify-content: center
+    align-items: center
+    transform: translateY(10px)
+    input
+        margin: 0
+
+.siam-input-, input.error
+    border: 1px solid red
+
+.gutter-row-1
+    margin-top: 1%
+
+.gutter-row-2
+    margin-top: 2%
+
+.gutter-row-3
+    margin-top: 3%
+
+.gutter-row-4
+    margin-top: 4%
+
+.full-width-box
+    width: 100%
+
+.full-centered-box
+    display: flex
+    justify-content: center
+    align-items: center
+
+.siam-table-select
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+
+.siam-calendar-container
+    position: relative
+
+.siam-empty-label
+    opacity: 0
+
+.siam-error-hint
+    color: $secondary-red
+    font-size: 11px
+    font-weight: bold
+    margin-top: 2px
+
+.siam-error-input
+    border: 1px solid $secondary-red !important
+
+.siam-form-group
+    margin: 0
+
+.siam-table
+    margin: 15px 0 -11px 0
+
+.siam-action-button
+    z-index: 30
+    cursor: pointer
+
+.siam-search-button
+    cursor: pointer
+
+.siam-full-centered
+    margin-top: 10px
+    display: flex
+    justify-content: center
+
+.siam-end-center
+    display: flex
+    justify-content: flex-end
+    align-content: center
+    margin-top: 2px
+
+.siam-start-center
+    display: flex
+    justify-content: flex-start
+    align-content: center
+    background-color: red
+
+.siam-self-end
+    align-self: flex-end !important
+
+.siam-flex-box
+    display: flex
+
+.siam-end-center
+    margin-top: 10px
+    display: flex
+    justify-content: flex-end
+    align-items: center
+
+.siam-icon-right
+    margin-left: 8px
+
+.siam-icon-left
+    margin-right: 8px
+
+.ReactModal__Overlay
+    opacity: 0
+
+.ReactModal__Overlay--after-open
+    opacity: 1
+    transition: 0.4s
+
+.ReactModal__Overlay--before-close
+    opacity: 0
+    transition: 0.4s
+
+.siam-div
+    height: 300px
+    width: 100%
+    background-color: lightcoral
+
+.siam-table-headers
+    text-align: center
+
+.custom-check
+    transform: translateY(2px)
+    margin-right: 5px
+
+.search-select-button
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 0
+
+    span
+        transform: translateX(3px)
+
+.siam-custom-check
+    margin: 0
+    display: flex
+    justify-content: flex-start
+    align-items: center
+
+    input
+        transform: translateY(-3px)
+        -ms-transform: translateY(-10px)
+
+
+.multiple-select-box
+    position: relative
+
+    .list-box
+        position: absolute
+        bottom: 0
+        left: 0
+        right: 0
+        background-color: $primary-white
+        border-radius: 2px
+        padding: 5px
+        z-index: 600
+        overflow-y: scroll
+        max-height: 100px
+        transform: translateY(100%)
+
+        label
+            margin-left: 5px
+        input
+            transform: translateY(1px)
+
+    .multiple-overlay
+        position: fixed
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        z-index: 500
+
+.siam-multi-select
+    cursor: default
+
+.alert-danger
+    margin-top: 10px
+
+    span
+        font-weight: bold
+    p
+        margin-bottom: 1.3em !important
+        padding-bottom: 1.3em
+        border-bottom: 1px solid #f1b0b7
+
+    p:last-child
+        border-bottom: 0px
+        margin-bottom: 0px !important
+        padding-bottom: 0px !important
+
+#divDetalles
+    overflow: auto
+    max-height: 300px !important
+
+.siam-inline-check
+    display: flex
+    align-items: flex-end
+    justify-content: flex-start
+
+    input
+        width: 16px
+        height: 16px
+
+    label
+        transform: translateY(2px)
+
+.table-custom-button
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    display: flex
+    justify-content: center
+    align-items: center
+
+.force-auto-height
+    height: auto !important
+
+.custom-calendar
+    background-color: red
+
+/* width */
+::-webkit-scrollbar
+    width: 8px
+
+/* Track */
+::-webkit-scrollbar-track
+    background: #f1f1f1
+
+/* Handle */
+::-webkit-scrollbar-thumb
+    background: #888
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover
+    background: #555
+
+.search-action-button
+    cursor: pointer
+
+.siam-justify-end
+    display: flex
+    justify-content: flex-end
+
+.justify-end
+    display: flex
+    justify-content: flex-end
+
+.table-scroll
+    max-height: 250px
+    overflow: auto
+
+.custom-component-table
+    box-shadow: 1px 1px 7px grey
+
+.overlay-appear
+    opacity: 0.01
+
+.overlay-appear.overlay-appear-active
+    opacity: 1
+    transition: opacity .3s linear
+
+.content-appear
+    margin-top: calc(-95vh)
+
+.content-appear.content-appear-active
+    margin-top: 0
+    transition: margin .3s ease-in
+
+.content-leave
+    margin-top: 0
+
+.content-leave.content-leave-active
+    margin-top: calc(-95vh)
+    transition: margin .3s linear
+
+::-ms-clear
+    display: none
+
+.custom-alert
+    margin-bottom: -7px
+
+.mejoramiento-alert
+    margin-top: -20px !important
+
+
+.custom-time-picker input
+    padding: 0 !important
+    height: auto !important
+    border-color: transparent !important
+
+.rc-time-picker-panel-input-invalid
+    border-color: $primary-red !important
+
+.hide-input-time-picker
+    display: none
+
+.scroll-table
+    table-layout: fixed !important
+
+    th
+        width: 200px
+        font-size: 12px
+    td
+        font-size: 12px
+
+.tableOrder
+    th
+        font-size: 12px
+    td
+        font-size: 12px
+
+.modal-content-full
+    width: 85% !important
