@@ -2,16 +2,50 @@
     <h1 class="display-4">Bienvenido al formulario Imbanaco</h1>
     <p class="lead">Este formulario actualmente se encuentre en desarrollo y se realiza de la mano con Manar Technologies</p>
     <hr class="my-4">
-    <p class="siam-panel-head">Diligenciar formulario</p>
-    <p class="lead">
-        <!-- <a class="btn btn-primary btn-lg" role="button" routerLink="formulario">Ir -></a> -->
-        <a class="btn btn-primary btn-lg" routerLink="/formulario" routerLinkActive="active">Formulario</a>
-    </p>
-</div>
+    <div class="card siam-panel">
+        <h5 class="card-header siam-panel-head siam-title">Diligenciar formulario</h5>
+        <div class="card-body siam-panel-body">
+            <div class="form-row">
+                <div class="col-3">
+                    <label for="userTipoId" class="siam-input-label">Tipo de Identificación</label>
+                    <select id="userTipoId" class="form-control siam-select-input">
+                    <option selected hidden>Seleccionar</option>
+                    <option>Wild type (wt)</option>
+                    <option>Hereditary (m)</option>
+                </select>
+                </div>
+                <div class="col">
+                    <label for="userFechaAttr" class="siam-input-label">Fecha de diagnóstico de ATTR</label>
+                    <input type="text" class="form-control  siam-text-input-id" id="userFechaAttr">
+                </div>
+            </div>
+            <br>
+            <a class="btn btn-primary btn-lg siam-button siam-buttons-box" routerLink="/formulario" routerLinkActive="active"> Buscar</a>
 
-<div class="card siam-panel">
-    <h5 class="card-header siam-panel-head">Diligenciar formulario</h5>
-    <div class="card-body  siam-panel-body">
-        <a class="btn btn-primary btn-lg siam-buttons-box" routerLink="/formulario" routerLinkActive="active">Formulario</a>
+        </div>
+    </div>
+    <br>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="table-header">#</th>
+                    <th scope="col" class="table-header">Nombre</th>
+                    <th scope="col" class="table-header">Identificación</th>
+                    <th scope="col" class="table-header">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>12346567</td>
+                    <td class="siam-buttons-box">
+                        <a class="btn btn-primary btn-lg siam-button" routerLink="/formulario" routerLinkActive="active">Formulario</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
     </div>
 </div>
