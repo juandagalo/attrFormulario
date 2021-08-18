@@ -4,25 +4,27 @@
     <hr class="my-4">
     <div class="card siam-panel">
         <h5 class="card-header siam-panel-head siam-title">Diligenciar formulario</h5>
-        <div class="card-body siam-panel-body">
-            <div class="form-row">
-                <div class="col-3">
-                    <label for="userTipoId" class="siam-input-label">Tipo de Identificación</label>
-                    <select id="userTipoId" class="form-control siam-select-input">
+        <form>
+            <div class="card-body siam-panel-body">
+                <div class="form-row">
+                    <div class="col-3">
+                        <label for="userTipoId" class="siam-input-label">Tipo de Identificación</label>
+                        <select id="userTipoId" class="form-control siam-select-input">
                     <option selected hidden>Seleccionar</option>
                     <option>Wild type (wt)</option>
                     <option>Hereditary (m)</option>
                 </select>
+                    </div>
+                    <div class="col">
+                        <label for="userFechaAttr" class="siam-input-label">Fecha de diagnóstico de ATTR</label>
+                        <input type="text" class="form-control  siam-text-input-id" id="userFechaAttr">
+                    </div>
                 </div>
-                <div class="col">
-                    <label for="userFechaAttr" class="siam-input-label">Fecha de diagnóstico de ATTR</label>
-                    <input type="text" class="form-control  siam-text-input-id" id="userFechaAttr">
-                </div>
-            </div>
-            <br>
-            <a class="btn btn-primary btn-lg siam-button siam-buttons-box" routerLink="/formulario" routerLinkActive="active"> Buscar</a>
+                <br>
+                <button class="btn btn-primary btn-lg siam-button siam-buttons-box" type="submit"> Buscar </button>
 
-        </div>
+            </div>
+        </form>
     </div>
     <br>
     <div>

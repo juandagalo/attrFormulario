@@ -13,7 +13,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Causando hinchazón en los tobillos, las piernas, etc.',
@@ -23,7 +23,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Haciendo que se siente o se acueste para descansar durante el día?',
@@ -33,7 +33,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }, ],
     [{name: '¿Haciendo que le resulte difícil caminar o subir escaleras?',
@@ -43,7 +43,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Dificultando el trabajo en casa o en el jardín.',
@@ -53,7 +53,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Dificultandole ir a lugares fuera de la  casa?',
@@ -63,7 +63,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }, ],
     [{name: '¿Dificultandole dormir bien por la noche?',
@@ -73,7 +73,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Dificultando la relación o las actividades con sus amigos o su familia?',
@@ -83,7 +83,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Dificulta su trabajo para ganarse la vida?',
@@ -93,7 +93,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }, ],
     [{name: '¿Dificultando sus pasatiempos, deportes o aficiones?',
@@ -103,7 +103,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Dificultando sus actividades sexuales?',
@@ -113,7 +113,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Le hace comer menos de los alimentos que le gustan?',
@@ -123,7 +123,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }, ],
     [{name: '¿Le hace perder la respiración?',
@@ -133,7 +133,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Se siente cansado, fatigado o con poca energía?',
@@ -143,7 +143,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Le hace permanecer en un hospital?',
@@ -153,7 +153,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }, ],
     [{name: '¿Le cuesta dinero la atención médica?',
@@ -163,7 +163,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Producirle efectos secundarios de los medicamentos?',
@@ -173,7 +173,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Le hace sentir que es una carga para su familia o amigos?',
@@ -183,7 +183,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }, ],
     [{name: '¿Le hace sentir una pérdida de autocontrol en su vida?',
@@ -193,7 +193,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: '¿Le hace preocuparse? ',
@@ -203,7 +203,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     },
     {name: 'Le hace difícil concentrarse o recordar cosas?',
@@ -213,7 +213,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }, ],
     [{name: '¿Le hace sentirse deprimido?',
@@ -223,7 +223,7 @@ export class FormularioMlfhService {
         option3: 2,
         option4: 3,
         option5: 4,
-        option6: 5,
+        option6: 5
       }
     }]
   ];
