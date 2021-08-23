@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Concepto } from 'src/app/models/concepto';
+import { Router } from '@angular/router';
+import { hisPaciente } from 'src/app/models/hisPaciente';
 import { ConceptosService } from '../../services/conceptos.service';
+import { PacientesService } from '../../services/pacientes.service';
 
 @Component({
   selector: 'app-home',
@@ -14,28 +16,44 @@ export class HomeComponent implements OnInit {
   conceptos: any;
 
   constructor(private formBuilder: FormBuilder,
-              public conceptosService : ConceptosService) {
+              private router:Router,
+              public conceptosService : ConceptosService,
+              public pacientesService : PacientesService) {
 
       this.searchForm = this.formBuilder.group({
         personIdType: ['',Validators.required],
         personId: ['',Validators.required]
       })
 
-      this.conceptosService.getDbConceptos();
+    this.conceptosService.getDbConceptos();
+      
       
    }
 
   ngOnInit(): void {
     
-    
   }
 
   buscarPaciente(){
-    console.log(this.searchForm);
+    this.pacientesService.getDbPacientes(
+      this.searchForm.get('personIdType').value, 
+      this.searchForm.get('personId').value
+    );
   }
 
-  obtenerIdentificaciones(){
+  verFormulario(paciente:hisPaciente){
 
-     
+    let concepto = this.conceptosService.conceptosTi;
+    let filtrado;
+
+    filtrado = concepto.filter(obj => {
+                      
+      return obj.conNumero == this.searchForm.get('personIdType').value;
+
+    })    
+
+    this.router.navigateByUrl('/formulario', { state: {paciente: paciente, concepto : filtrado[0]} });
+    
   }
+
 }

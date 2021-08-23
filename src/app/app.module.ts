@@ -8,13 +8,15 @@ import { HomeComponent } from './components/home/home.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SexoPipe } from './pipes/sexo.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     FormularioComponent,
-    FooterComponent
+    FooterComponent,
+    SexoPipe
   ],
   imports: [
     BrowserModule,

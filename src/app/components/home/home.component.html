@@ -16,8 +16,8 @@
                         <small *ngIf="searchForm.controls['personIdType'].invalid && searchForm.controls['personIdType'].touched" class="form-text data-table-info">Campo obligatorio</small>
                     </div>
                     <div class="col">
-                        <label for="userFechaAttr" class="siam-input-label">Fecha de diagnóstico de ATTR</label>
-                        <input type="text" class="form-control  siam-text-input-id" id="userFechaAttr" formControlName="personId">
+                        <label for="personId" class="siam-input-label">Identificación</label>
+                        <input type="text" class="form-control  siam-text-input-id" id="personId" formControlName="personId">
                         <small *ngIf="searchForm.controls['personId'].invalid && searchForm.controls['personId'].touched" class="form-text data-table-info">Campo obligatorio</small>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
     </div>
     <br>
     <div>
-        <table class="table">
+        <table class="table" *ngIf="pacientesService.hisPacientes.length > 0">
             <thead>
                 <tr>
                     <th scope="col" class="table-header">#</th>
@@ -39,12 +39,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>12346567</td>
+                <tr *ngFor="let paciente of pacientesService.hisPacientes; let i = index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ paciente.pacNombre }}</td>
+                    <td>{{ paciente.pacNumeroId }}</td>
                     <td class="siam-buttons-box">
-                        <a class="btn btn-primary btn-lg siam-button" routerLink="/formulario" routerLinkActive="active">Formulario</a>
+                        <a (click)="verFormulario(paciente)" class="btn btn-primary btn-lg siam-button">Formulario</a>
                     </td>
                 </tr>
 
