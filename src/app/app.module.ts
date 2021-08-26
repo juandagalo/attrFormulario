@@ -9,6 +9,7 @@ import { FormularioComponent } from './components/formulario/formulario.componen
 import { FooterComponent } from './components/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SexoPipe } from './pipes/sexo.pipe';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SexoPipe } from './pipes/sexo.pipe';
     HomeComponent,
     FormularioComponent,
     FooterComponent,
-    SexoPipe
+    SexoPipe,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

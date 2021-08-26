@@ -1,34 +1,32 @@
-export class PacienteAttr{
-
-    AttrNumero: number;
-    AttrEdad: number;
-    AttrEtnia: number;
-    AttrOcupacion: string;
-    AttrComorbilidad: number;
-    AttrImplanteDispositivo: string;
-    AttrTipoImplanteDispositivo: number;
-    AttrFormaSindClinico: number;
-    AttrOtraFormaSindClinico: string;
-    AttrManifestExtracardiaca: string;
-    AttrTipoManifestExtracardiaca: number;
-    AttrOtroTipoManifestExtracardiaca: string;
-    AttrManifestElectro: string;
-    AttrNTproBN: number;
-    AttrTropon: number;
-    AttrGrosorVentri: string;
-    attrFracEyecc: number;
-    attrDeformLong: number;
-    attrResoNucleGodolinio:number;
-    AttrTipoAnormGadolinio: number;
-    AttrGammag: number;
-    AttrAmiloidosis: string;
-    AttrAttrCm: string; 
-    AttrFechaAttrCm: Date;
-    AttrTipoAttrCm: number;
-    AttrDesenlace: number;
-    AttrFechaFallece: Date;
-    AttrEdadFallece: number;
-    CreateDate: Date;
-    UpdateDate: Date;
-    
-}
+export type PacienteAttr = {
+    attrNumero:number; 
+    attrEtnia:number; 
+    attrOcupacion:string; 
+    attrFechaPrimConsul:Date; 
+    attrComorbilidad:number; 
+    attrImplanteDispositivo:number;
+    attrTipoImplanteDispositivo:number; 
+    attrFormaSindClinico:number; 
+    attrOtraFormaSindClinico:string; 
+    attrManifestExtracardiaca:number; 
+    attrTipoManifestExtracardiaca:number; 
+    attrOtroTipoManifestExtracardiaca:string; 
+    attrManifestElectro:number; 
+    attrNTproBN:number; 
+    attrTroponinT:number; 
+    attrGrosorVentri:number; 
+    attrFracEyecc:number; 
+    attrDeformLong:number; 
+    attrResoNucleGodolinio:number; 
+    attrTipoAnormGadolinio:number; 
+    attrGammagr:number; 
+    attrAmiloidosis:number; 
+    attrAttrCm:number; 
+    attrFechaAttrCm:Date; 
+    attrTipoAttrCm:number; 
+    attrInterFamaco:number; 
+    attrOtroInterFamaco:string; 
+    attrDesenlace:number; 
+    attrFechaFallece:Date; 
+    attrEdadFallece:number;    
+};
