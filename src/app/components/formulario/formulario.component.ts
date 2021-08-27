@@ -7,6 +7,10 @@ import { Concepto } from 'src/app/models/concepto';
 import { ConceptosService } from 'src/app/services/conceptos.service';
 import { PacienteAttr } from 'src/app/models/pacienteAttr';
 import { PacientesService } from '../../services/pacientes.service';
+import { HospitalizacionesService } from '../../services/hospitalizaciones.service';
+import { Hospitalizacion } from 'src/app/models/hospitalizaciones';
+import { Encuesta } from 'src/app/models/encuesta';
+import { EncuestasService } from 'src/app/services/encuestas.service';
 
 
 @Component({
@@ -15,103 +19,149 @@ import { PacientesService } from '../../services/pacientes.service';
   styleUrls: []
 })
 export class FormularioComponent implements OnInit {
-	loading:boolean										= true;
 	attrForm: FormGroup;
-	hisPaciente:hisPaciente;
-	conceptos:Concepto;
-	pacienteEdad:number;
-	flagExiste:boolean;
-	pacienteAttr:PacienteAttr							= {} as PacienteAttr;
-	implanteCardiaco:boolean                            = false;
-	tieneOtroSindromeClinico:boolean                    = false;
-	tieneManifestacionesExtracardiacas:boolean          = false;
-	tieneOtrasManifestacionesExtracardiacas:boolean     = false;
-	tieneGrosorVentriculoIzquierdo:boolean              = false;
-	tieneResonanciaMagnetica:boolean                    = false;
-	tieneAtter:boolean                                  = false;
-	tieneOtraInvervencionFarmacologica:boolean          = false;
-	tieneHospitalizacionesFCardiaca:boolean             = false;
-	formularioMlfh:any                                  = {};
-  
-
-  constructor(	private  	forumlarioMLFHService: 	FormularioMlfhService,
-              	private  	routerAtive: 			ActivatedRoute,
-              	private  	router:					Router,
-				private 	formBuilder: 			FormBuilder,
-              	public  	conceptosService : 		ConceptosService,
-				public 		pacientesService :		PacientesService) {
+	hospitalizacionForm: FormGroup;
+	encuestaForm: FormGroup;
+	hisPaciente: hisPaciente;
+	conceptos: Concepto;
+	pacienteEdad: number;
+	flagExiste: boolean;
+	pacienteAttr: PacienteAttr					= {} as PacienteAttr;
+	hospitalizaciones: Hospitalizacion[]		= [];
+	encuestas: Encuesta[]						= [];
+	implanteCardiaco                            = false;
+	tieneOtroSindromeClinico                    = false;
+	tieneManifestacionesExtracardiacas          = false;
+	tieneOtrasManifestacionesExtracardiacas     = false;
+	tieneGrosorVentriculoIzquierdo              = false;
+	tieneResonanciaMagnetica                    = false;
+	tieneAtter                                  = false;
+	tieneOtraInvervencionFarmacologica          = false;
+	tieneHospitalizacionesFCardiaca             = false;
+	formularioMlfh: any                         = {};
+	loading										= true;
 	
-		//Se obtiene la información de la ruta
+	
+	constructor( private  	forumlarioMLFHService: FormularioMlfhService,
+	             private  	routerAtive: ActivatedRoute,
+	             private  	router:	Router,
+	             private 	formBuilder: FormBuilder,
+	             public  	conceptosService: ConceptosService,
+	             public 	pacientesService:	PacientesService,
+				 public		hospitalizacionesService: HospitalizacionesService,
+				 public		encuestaService: EncuestasService) 
+	{
+	
+		// Se obtiene la información de la ruta
 		this.hisPaciente = this.router.getCurrentNavigation().extras.state.paciente as hisPaciente;
 		this.conceptos = this.router.getCurrentNavigation().extras.state.concepto as Concepto;
-
-		//Se calcula la edad del paciente
+	
+		// Se calcula la edad del paciente
 		this.pacienteEdad = this.ageFromDateOfBirthday(this.hisPaciente.pacFechaNac);
-		
-		//Se inicializan los conceptos desde la base de datos
+			
+		// Se inicializan los conceptos desde la base de datos
 		this.conceptosService.getDbConceptos();
+	
+	}
 
-
+	ngOnInit(): void {
+		
 		this.pacientesService.obtenerPacienteAttr(this.hisPaciente.pacNumero).subscribe(
 			data => {
-
+			
 				this.pacienteAttr  = data as PacienteAttr;
 				this.flagExiste = true;
 				this.ponerValoresPorOmision(this.pacienteAttr);
 				this.loading = false;
-				
+				this.obtenerHospitalizaciones();
+				this.obtenerEncuestas();
+			
 			},
-			(error) => {    
-
+			(error) => {
+			
 				this.pacienteAttr  = {} as PacienteAttr;
 				this.flagExiste = false;
-
-			}	
+			
+			}
 		);
-
-
-
-		// this.pacienteAttr = this.pacientesService
-		
-      	this.routerAtive.params.subscribe(params =>{
-        	this.getFormulario();
-      	});
+	
+			
+		this.routerAtive.params.subscribe(params => {
+			this.getFormulario();
+		});
 		this.attrForm = this.formBuilder.group({
-
-			AttrEtnia: ['',Validators.required],
-			AttrOcupacion: ['',Validators.required],
-			AttrFechaPrimConsul: ['',Validators.required],
-			AttrComorbilidad: ['',Validators.required],
-			AttrImplanteDispositivo: ['',Validators.required],
+		
+			AttrEtnia: ['', Validators.required],
+			AttrOcupacion: ['', Validators.required],
+			AttrFechaPrimConsul: ['', Validators.required],
+			AttrComorbilidad: ['', Validators.required],
+			AttrImplanteDispositivo: ['', Validators.required],
 			AttrTipoImplanteDispositivo: [''],
-			AttrFormaSindClinico: ['',Validators.required],
+			AttrFormaSindClinico: ['', Validators.required],
 			AttrOtraFormaSindClinico: [''],
-			AttrManifestExtracardiaca: ['',Validators.required],
+			AttrManifestExtracardiaca: ['', Validators.required],
 			AttrTipoManifestExtracardiaca: [''],
 			AttrOtroTipoManifestExtracardiaca: [''],
-			AttrManifestElectro: ['',Validators.required],
-			AttrNTproBN: ['',Validators.required],
-			AttrTroponinT: ['',Validators.required],
-			AttrGrosorVentri: ['',Validators.required],
+			AttrManifestElectro: ['', Validators.required],
+			AttrNTproBN: ['', Validators.required],
+			AttrTroponinT: ['', Validators.required],
+			AttrGrosorVentri: ['', Validators.required],
 			AttrFracEyecc: [''],
 			AttrDeformLong: [''],
-			AttrResoNucleGodolinio: ['',Validators.required],
+			AttrResoNucleGodolinio: ['', Validators.required],
 			AttrTipoAnormGadolinio: [''],
-			AttrGammagr: ['',Validators.required],
-			AttrAmiloidosis: ['',Validators.required],
-			AttrAttrCm: ['',Validators.required],
-			AttrInterFamaco: ['',Validators.required],
+			AttrGammagr: ['', Validators.required],
+			AttrAmiloidosis: ['', Validators.required],
+			AttrAttrCm: ['', Validators.required],
+			AttrInterFamaco: ['', Validators.required],
 			AttrOtroInterFamaco: [''],
-		    AttrDesenlace: [''],
+			AttrDesenlace: [''],
 			AttrFechaAttrCm: [''],
 			AttrTipoAttrCm: [''],
 			AttrFechaFallece: [''],
 			AttrEdadFallece: [''],
-
+		
 		});
 
-  }
+		this.hospitalizacionForm = this.formBuilder.group({
+			attrIngresoUltimaHosp: ['',Validators.required],
+			attrEgresoUltimaHosp: ['',Validators.required],
+			attrDiagUltimaHosp: ['',Validators.required],
+			attrDiagEgresoUltimaHosp: ['',Validators.required],
+		});
 
+		this.encuestaForm = this.formBuilder.group({
+			attrIsuficiencia: [''],
+			attrHinchazon: [''],
+			attrDesncanso: [''],
+
+			attrDificCaminar: [''],
+			attrDificJardin: [''],
+			attrDificAfuera: [''],
+
+			attrDificDormir: [''],
+			attrDificSocial: [''],
+			attrDificTrabajo: [''],
+
+			attrDificHobbie: [''],
+			attrDificSexual: [''],
+			attrDificCoidas: [''],
+
+			attrDificRespir: [''],
+			attrFatiga: [''],
+			attrHospital: [''],
+
+			attrCostoMedico: [''],
+			attrEfectoSecund: [''],
+			attrCargaFamili: [''],
+
+			attrAutoControl: [''],
+			attrPreocuparse: [''],
+			attrConcentrarse: [''],
+
+			attrDepresion: ['']
+		});
+	}
 
 	getFormulario(): void{
 		this.formularioMlfh = this.forumlarioMLFHService.getforumlariomlfh();
@@ -123,18 +173,16 @@ export class FormularioComponent implements OnInit {
 		const pacienteAttr: PacienteAttr = this.crearPacienteAttr();
 
 		if (!this.flagExiste) {
-			console.log("Entre a guardar");
 			
-			this.pacientesService.guardarPacienteAttr(pacienteAttr).subscribe((data:any) =>{
+			this.pacientesService.guardarPacienteAttr(pacienteAttr).subscribe((data: any) => {
 
 				this.loading = false;
 				
 			});
 
 		}else{
-			console.log("Entre a actualiazr");
 			
-			this.pacientesService.actualizarPacienteAttr(pacienteAttr).subscribe((data:any) =>{
+			this.pacientesService.actualizarPacienteAttr(pacienteAttr).subscribe((data: any) => {
 
 				this.loading = false;
 				
@@ -143,9 +191,84 @@ export class FormularioComponent implements OnInit {
 		
 	}
 
-	ngOnInit(): void {
+	guardarHospitalizacion(){
+
+		this.hospitalizacionesService.guardarHospitalizacion(this.crearHospitalizacon()).subscribe(
+			data => {
+				this.obtenerHospitalizaciones();
+				this.hospitalizacionForm.reset();
+				this.tieneHospitalizacionesFCardiaca = false;
+			},
+			error => {
+				console.log(error);	
+			}
+		);
 	}
 
+	guardarEncuesta(){
+
+		this.encuestaService.guardarEncuesta(this.crearEncuesta()).subscribe(
+			data => {
+				this.obtenerEncuestas();
+				this.encuestaForm.reset();
+			},
+			error => {
+				console.log(error);	
+			}
+		);
+	}
+
+	
+
+	crearHospitalizacon(): Hospitalizacion{
+		const hospitalizacion: Hospitalizacion = {
+		    attrPacNum: this.hisPaciente.pacNumero,
+		    attrIngresoUltimaHosp: new Date(this.hospitalizacionForm.get('attrIngresoUltimaHosp').value),
+		    attrEgresoUltimaHosp: new Date(this.hospitalizacionForm.get('attrEgresoUltimaHosp').value),
+		    attrDiagUltimaHosp: new Date(this.hospitalizacionForm.get('attrDiagUltimaHosp').value),
+		    attrDiagEgresoUltimaHosp: new Date(this.hospitalizacionForm.get('attrDiagEgresoUltimaHosp').value),
+		};
+
+		return hospitalizacion;
+	}
+
+	crearEncuesta(): Encuesta{
+		const encuesta: Encuesta = {
+		    attrNumero: this.hisPaciente.pacNumero,
+		    attrIsuficiencia: Number(this.encuestaForm.get('attrIsuficiencia').value),
+		    attrHinchazon: Number(this.encuestaForm.get('attrHinchazon').value),
+		    attrDesncanso: Number(this.encuestaForm.get('attrDesncanso').value),
+
+		    attrDificCaminar: Number(this.encuestaForm.get('attrDificCaminar').value),
+		    attrDificJardin: Number(this.encuestaForm.get('attrDificJardin').value),
+		    attrDificAfuera: Number(this.encuestaForm.get('attrDificAfuera').value),
+
+		    attrDificDormir: Number(this.encuestaForm.get('attrDificDormir').value),
+		    attrDificSocial: Number(this.encuestaForm.get('attrDificSocial').value),
+		    attrDificTrabajo: Number(this.encuestaForm.get('attrDificTrabajo').value),
+
+		    attrDificHobbie: Number(this.encuestaForm.get('attrDificHobbie').value),
+		    attrDificSexual: Number(this.encuestaForm.get('attrDificSexual').value),
+		    attrDificCoidas: Number(this.encuestaForm.get('attrDificCoidas').value),
+
+		    attrDificRespir: Number(this.encuestaForm.get('attrDificRespir').value),
+		    attrFatiga: Number(this.encuestaForm.get('attrFatiga').value),
+		    attrHospital: Number(this.encuestaForm.get('attrHospital').value),
+
+		    attrCostoMedico: Number(this.encuestaForm.get('attrCostoMedico').value),
+		    attrEfectoSecund: Number(this.encuestaForm.get('attrEfectoSecund').value),
+		    attrCargaFamili: Number(this.encuestaForm.get('attrCargaFamili').value),
+
+		    attrAutoControl: Number(this.encuestaForm.get('attrAutoControl').value),
+		    attrPreocuparse: Number(this.encuestaForm.get('attrPreocuparse').value),
+		    attrConcentrarse: Number(this.encuestaForm.get('attrConcentrarse').value),
+
+		    attrDepresion: Number(this.encuestaForm.get('attrDepresion').value)
+
+		};
+
+		return encuesta;
+	}
 	
 	crearPacienteAttr(): PacienteAttr{
 		const pacienteAttr: PacienteAttr = {
@@ -155,30 +278,30 @@ export class FormularioComponent implements OnInit {
 			attrFechaPrimConsul:				new Date(this.attrForm.get('AttrFechaPrimConsul').value),
 			attrComorbilidad: 					Number(this.attrForm.get('AttrComorbilidad').value),
 			attrImplanteDispositivo: 			Number(this.attrForm.get('AttrImplanteDispositivo').value),
-			attrTipoImplanteDispositivo: 		this.attrForm.get('AttrTipoImplanteDispositivo').value ? 
+			attrTipoImplanteDispositivo: 		this.attrForm.get('AttrTipoImplanteDispositivo').value ?
 													Number(this.attrForm.get('AttrTipoImplanteDispositivo').value) : this.conceptosService.conceptosAttr[0].conNumero,
 			attrFormaSindClinico: 				Number(this.attrForm.get('AttrFormaSindClinico').value),
 			attrOtraFormaSindClinico: 			this.attrForm.get('AttrOtraFormaSindClinico').value,
 			attrManifestExtracardiaca: 			Number(this.attrForm.get('AttrManifestExtracardiaca').value),
-			attrTipoManifestExtracardiaca: 		this.attrForm.get('AttrTipoManifestExtracardiaca').value ? 
+			attrTipoManifestExtracardiaca: 		this.attrForm.get('AttrTipoManifestExtracardiaca').value ?
 													Number(this.attrForm.get('AttrTipoManifestExtracardiaca').value) : this.conceptosService.conceptosAttr[0].conNumero,
 			attrOtroTipoManifestExtracardiaca: 	this.attrForm.get('AttrOtroTipoManifestExtracardiaca').value,
-			attrManifestElectro: 				this.attrForm.get('AttrManifestElectro').value ? 
-													Number(this.attrForm.get('AttrManifestElectro').value) : this.conceptosService.conceptosAttr[0].conNumero, 
+			attrManifestElectro: 				this.attrForm.get('AttrManifestElectro').value ?
+													Number(this.attrForm.get('AttrManifestElectro').value) : this.conceptosService.conceptosAttr[0].conNumero,
 			attrNTproBN: 						this.attrForm.get('AttrNTproBN').value,
 			attrTroponinT: 						this.attrForm.get('AttrTroponinT').value,
 			attrGrosorVentri: 					Number(this.attrForm.get('AttrGrosorVentri').value),
 			attrFracEyecc: 						Number(this.attrForm.get('AttrFracEyecc').value),
 			attrDeformLong: 					Number(this.attrForm.get('AttrDeformLong').value),
 			attrResoNucleGodolinio: 			Number(this.attrForm.get('AttrResoNucleGodolinio').value),
-			attrTipoAnormGadolinio: 			this.attrForm.get('AttrTipoAnormGadolinio').value ? 
-													Number(this.attrForm.get('AttrTipoAnormGadolinio').value):this.conceptosService.conceptosAttr[0].conNumero,
+			attrTipoAnormGadolinio: 			this.attrForm.get('AttrTipoAnormGadolinio').value ?
+													Number(this.attrForm.get('AttrTipoAnormGadolinio').value) : this.conceptosService.conceptosAttr[0].conNumero,
 			attrGammagr: 						Number(this.attrForm.get('AttrGammagr').value),
 			attrAmiloidosis: 					Number(this.attrForm.get('AttrAmiloidosis').value),
 			attrAttrCm:  						Number(this.attrForm.get('AttrAttrCm').value),
-			attrFechaAttrCm: 					this.attrForm.get('AttrFechaAttrCm').value ? 
+			attrFechaAttrCm: 					this.attrForm.get('AttrFechaAttrCm').value ?
 													new Date(this.attrForm.get('AttrFechaAttrCm').value) : new Date("01/01/1999"),
-			attrTipoAttrCm: 					this.attrForm.get('AttrTipoAttrCm').value ? 
+			attrTipoAttrCm: 					this.attrForm.get('AttrTipoAttrCm').value ?
 													Number(this.attrForm.get('AttrTipoAttrCm').value) : this.conceptosService.conceptosAttr[0].conNumero,
 			attrInterFamaco: 					Number(this.attrForm.get('AttrInterFamaco').value),
 			attrOtroInterFamaco: 				this.attrForm.get('AttrOtroInterFamaco').value,
@@ -190,7 +313,7 @@ export class FormularioComponent implements OnInit {
 		return pacienteAttr;
 	}
 
-	ponerValoresPorOmision(paciente){	
+	ponerValoresPorOmision(paciente){
 
 		let pacienteAttr  = {
 			AttrEtnia: 							paciente.attrEtnia,
@@ -204,7 +327,7 @@ export class FormularioComponent implements OnInit {
 			AttrManifestExtracardiaca: 			paciente.attrManifestExtracardiaca,
 			AttrTipoManifestExtracardiaca: 		paciente.attrTipoManifestExtracardiaca,
 			AttrOtroTipoManifestExtracardiaca: 	paciente.attrOtroTipoManifestExtracardiaca,
-			AttrManifestElectro: 				paciente.attrManifestElectro, 
+			AttrManifestElectro: 				paciente.attrManifestElectro,
 			AttrNTproBN: 						paciente.attrNTproBN,
 			AttrTroponinT: 						paciente.attrTroponinT,
 			AttrGrosorVentri: 					paciente.attrGrosorVentri,
@@ -226,7 +349,37 @@ export class FormularioComponent implements OnInit {
 
 		this.attrForm.setValue(pacienteAttr);
 		
+	}
 
+	obtenerHospitalizaciones(){
+
+		this.hospitalizacionesService.obtenerHospitalizaciones(this.pacienteAttr.attrNumero).subscribe(
+			data => {
+				
+				this.hospitalizaciones = data as Hospitalizacion[];
+			},
+			(error)=>{
+
+				console.log(error);
+
+			}
+		);
+	}
+
+	obtenerEncuestas(){
+
+		this.encuestaService.obtenerEncuestas(this.pacienteAttr.attrNumero).subscribe(
+			data => {
+				console.log(data);
+				
+				this.encuestas = data as Encuesta[];
+			},
+			(error)=>{
+
+				console.log(error);
+
+			}
+		);
 	}
 
 	mostrarDispositivosCardiacos(implanteCardiaco: boolean): void{
@@ -239,14 +392,14 @@ export class FormularioComponent implements OnInit {
 		this.implanteCardiaco = implanteCardiaco;
 	}
 
-	otroSindromeClinico(tieneOtroSindromeClinico:boolean): void{
+	otroSindromeClinico(tieneOtroSindromeClinico: boolean): void{
 	
 		this.tieneOtroSindromeClinico = tieneOtroSindromeClinico;
 	
 	}
 
 
-	mostrarManifestacionesExtracardiacas(tieneManifestacionesExtracardiacas:boolean): void{
+	mostrarManifestacionesExtracardiacas(tieneManifestacionesExtracardiacas: boolean): void{
 	
 		this.tieneManifestacionesExtracardiacas = tieneManifestacionesExtracardiacas;
 		
@@ -256,7 +409,7 @@ export class FormularioComponent implements OnInit {
 
 
 
-	otrasManifestacionesExtracardiacas(tieneOtrasManifestacionesExtracardiacas:boolean): void{
+	otrasManifestacionesExtracardiacas(tieneOtrasManifestacionesExtracardiacas: boolean): void{
 	
 		this.tieneOtrasManifestacionesExtracardiacas = tieneOtrasManifestacionesExtracardiacas;
 	
@@ -264,29 +417,29 @@ export class FormularioComponent implements OnInit {
 
 
 
-	mostrarGrosorVentriculoIzquierdo(tieneGrosorVentriculoIzquierdo:boolean): void{
+	mostrarGrosorVentriculoIzquierdo(tieneGrosorVentriculoIzquierdo: boolean): void{
 
 		this.tieneGrosorVentriculoIzquierdo = tieneGrosorVentriculoIzquierdo;
 
 	}
 
 
-	mostrarResonanciaMagnetica(tieneResonanciaMagnetica:boolean): void{
+	mostrarResonanciaMagnetica(tieneResonanciaMagnetica: boolean): void{
 		this.tieneResonanciaMagnetica = tieneResonanciaMagnetica;
 	}
 	
 
-	mostrarAttr(tieneAtter:boolean): void{
+	mostrarAttr(tieneAtter: boolean): void{
 		this.tieneAtter = tieneAtter;
 	}
 
 
-	otraInvervencionFarmacologica(tieneOtraInvervencionFarmacologica:boolean): void{
+	otraInvervencionFarmacologica(tieneOtraInvervencionFarmacologica: boolean): void{
 		this.tieneOtraInvervencionFarmacologica = tieneOtraInvervencionFarmacologica;
 	}
 
 
-	mostrarHospitalizacionesFCardiaca(tieneHospitalizacionesFCardiaca:boolean): void{
+	mostrarHospitalizacionesFCardiaca(tieneHospitalizacionesFCardiaca: boolean): void{
 		this.tieneHospitalizacionesFCardiaca = tieneHospitalizacionesFCardiaca;
 	}
 
