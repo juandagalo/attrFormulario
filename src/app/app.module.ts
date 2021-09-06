@@ -14,6 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { EncuestaTerminadaPipe } from './pipes/encuesta-terminada.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     FormularioComponent,
     FooterComponent,
     SexoPipe,
-    LoadingComponent
+    LoadingComponent,
+    EncuestaTerminadaPipe
   ],
   imports: [
     BrowserModule,

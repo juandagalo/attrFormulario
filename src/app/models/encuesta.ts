@@ -1,5 +1,5 @@
 export type Encuesta = {
-
+    attrEncId:number;
     attrNumero: number;
     attrIsuficiencia: number;
     attrHinchazon: number;

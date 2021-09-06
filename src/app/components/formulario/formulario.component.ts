@@ -25,7 +25,9 @@ export class FormularioComponent implements OnInit {
 	hisPaciente: hisPaciente;
 	conceptos: Concepto;
 	pacienteEdad: number;
-	flagExiste: boolean;
+	flagExistePaciente: boolean;
+	flagEditarEncuesta: boolean					= false;
+	flagCabmiaValorEncuesta: boolean			= false;
 	pacienteAttr: PacienteAttr					= {} as PacienteAttr;
 	hospitalizaciones: Hospitalizacion[]		= [];
 	encuestas: Encuesta[]						= [];
@@ -70,7 +72,7 @@ export class FormularioComponent implements OnInit {
 			data => {
 			
 				this.pacienteAttr  = data as PacienteAttr;
-				this.flagExiste = true;
+				this.flagExistePaciente = true;
 				this.ponerValoresPorOmision(this.pacienteAttr);
 				this.loading = false;
 				this.obtenerHospitalizaciones();
@@ -80,7 +82,7 @@ export class FormularioComponent implements OnInit {
 			(error) => {
 			
 				this.pacienteAttr  = {} as PacienteAttr;
-				this.flagExiste = false;
+				this.flagExistePaciente = false;
 			
 			}
 		);
@@ -131,6 +133,8 @@ export class FormularioComponent implements OnInit {
 		});
 
 		this.encuestaForm = this.formBuilder.group({
+			attrEncId: [''],
+
 			attrIsuficiencia: [''],
 			attrHinchazon: [''],
 			attrDesncanso: [''],
@@ -161,6 +165,10 @@ export class FormularioComponent implements OnInit {
 
 			attrDepresion: ['']
 		});
+
+		this.encuestaForm.valueChanges.subscribe(x => {
+			this.flagCabmiaValorEncuesta = true;
+		})
 	}
 
 	getFormulario(): void{
@@ -172,7 +180,7 @@ export class FormularioComponent implements OnInit {
 		this.loading = true;
 		const pacienteAttr: PacienteAttr = this.crearPacienteAttr();
 
-		if (!this.flagExiste) {
+		if (!this.flagExistePaciente) {
 			
 			this.pacientesService.guardarPacienteAttr(pacienteAttr).subscribe((data: any) => {
 
@@ -206,16 +214,37 @@ export class FormularioComponent implements OnInit {
 	}
 
 	guardarEncuesta(){
+		
+		const encuestaAttr: Encuesta = this.crearEncuesta();
 
-		this.encuestaService.guardarEncuesta(this.crearEncuesta()).subscribe(
-			data => {
-				this.obtenerEncuestas();
-				this.encuestaForm.reset();
-			},
-			error => {
-				console.log(error);	
-			}
-		);
+		if (!this.flagEditarEncuesta) {
+
+			this.encuestaService.guardarEncuesta(encuestaAttr).subscribe(
+				data => {
+					this.obtenerEncuestas();
+					this.limpiarEncuesta();
+					this.flagCabmiaValorEncuesta = false;
+				},
+				error => {
+					console.log(error);	
+				}
+			);
+
+		} else {
+			this.encuestaService.actualizarEncuesta(encuestaAttr).subscribe(
+				data => {
+					this.obtenerEncuestas();
+					this.limpiarEncuesta();
+					this.flagEditarEncuesta = false;
+					this.flagCabmiaValorEncuesta = false;
+				},
+				error => {
+					console.log(error);	
+				}
+			);
+		}
+
+		
 	}
 
 	
@@ -234,6 +263,7 @@ export class FormularioComponent implements OnInit {
 
 	crearEncuesta(): Encuesta{
 		const encuesta: Encuesta = {
+			attrEncId: Number(this.encuestaForm.get('attrEncId').value),
 		    attrNumero: this.hisPaciente.pacNumero,
 		    attrIsuficiencia: Number(this.encuestaForm.get('attrIsuficiencia').value),
 		    attrHinchazon: Number(this.encuestaForm.get('attrHinchazon').value),
@@ -279,15 +309,15 @@ export class FormularioComponent implements OnInit {
 			attrComorbilidad: 					Number(this.attrForm.get('AttrComorbilidad').value),
 			attrImplanteDispositivo: 			Number(this.attrForm.get('AttrImplanteDispositivo').value),
 			attrTipoImplanteDispositivo: 		this.attrForm.get('AttrTipoImplanteDispositivo').value ?
-													Number(this.attrForm.get('AttrTipoImplanteDispositivo').value) : this.conceptosService.conceptosAttr[0].conNumero,
+													Number(this.attrForm.get('AttrTipoImplanteDispositivo').value) : this.conceptosService.getNotValidId(),
 			attrFormaSindClinico: 				Number(this.attrForm.get('AttrFormaSindClinico').value),
 			attrOtraFormaSindClinico: 			this.attrForm.get('AttrOtraFormaSindClinico').value,
 			attrManifestExtracardiaca: 			Number(this.attrForm.get('AttrManifestExtracardiaca').value),
 			attrTipoManifestExtracardiaca: 		this.attrForm.get('AttrTipoManifestExtracardiaca').value ?
-													Number(this.attrForm.get('AttrTipoManifestExtracardiaca').value) : this.conceptosService.conceptosAttr[0].conNumero,
+													Number(this.attrForm.get('AttrTipoManifestExtracardiaca').value) : this.conceptosService.getNotValidId(),
 			attrOtroTipoManifestExtracardiaca: 	this.attrForm.get('AttrOtroTipoManifestExtracardiaca').value,
 			attrManifestElectro: 				this.attrForm.get('AttrManifestElectro').value ?
-													Number(this.attrForm.get('AttrManifestElectro').value) : this.conceptosService.conceptosAttr[0].conNumero,
+													Number(this.attrForm.get('AttrManifestElectro').value) : this.conceptosService.getNotValidId(),
 			attrNTproBN: 						this.attrForm.get('AttrNTproBN').value,
 			attrTroponinT: 						this.attrForm.get('AttrTroponinT').value,
 			attrGrosorVentri: 					Number(this.attrForm.get('AttrGrosorVentri').value),
@@ -295,14 +325,14 @@ export class FormularioComponent implements OnInit {
 			attrDeformLong: 					Number(this.attrForm.get('AttrDeformLong').value),
 			attrResoNucleGodolinio: 			Number(this.attrForm.get('AttrResoNucleGodolinio').value),
 			attrTipoAnormGadolinio: 			this.attrForm.get('AttrTipoAnormGadolinio').value ?
-													Number(this.attrForm.get('AttrTipoAnormGadolinio').value) : this.conceptosService.conceptosAttr[0].conNumero,
+													Number(this.attrForm.get('AttrTipoAnormGadolinio').value) : this.conceptosService.getNotValidId(),
 			attrGammagr: 						Number(this.attrForm.get('AttrGammagr').value),
 			attrAmiloidosis: 					Number(this.attrForm.get('AttrAmiloidosis').value),
 			attrAttrCm:  						Number(this.attrForm.get('AttrAttrCm').value),
 			attrFechaAttrCm: 					this.attrForm.get('AttrFechaAttrCm').value ?
 													new Date(this.attrForm.get('AttrFechaAttrCm').value) : new Date("01/01/1999"),
 			attrTipoAttrCm: 					this.attrForm.get('AttrTipoAttrCm').value ?
-													Number(this.attrForm.get('AttrTipoAttrCm').value) : this.conceptosService.conceptosAttr[0].conNumero,
+													Number(this.attrForm.get('AttrTipoAttrCm').value) : this.conceptosService.getNotValidId(),
 			attrInterFamaco: 					Number(this.attrForm.get('AttrInterFamaco').value),
 			attrOtroInterFamaco: 				this.attrForm.get('AttrOtroInterFamaco').value,
 			attrDesenlace: 						null ? null : 4559,
@@ -370,7 +400,6 @@ export class FormularioComponent implements OnInit {
 
 		this.encuestaService.obtenerEncuestas(this.pacienteAttr.attrNumero).subscribe(
 			data => {
-				console.log(data);
 				
 				this.encuestas = data as Encuesta[];
 			},
@@ -381,6 +410,94 @@ export class FormularioComponent implements OnInit {
 			}
 		);
 	}
+
+	editarEncuesta(encuesta:Encuesta){
+		
+		let encuestaForm = {
+			attrEncId: encuesta.attrEncId,
+			attrIsuficiencia: encuesta.attrIsuficiencia,
+			attrHinchazon: encuesta.attrHinchazon,
+			attrDesncanso: encuesta.attrDesncanso,
+
+			attrDificCaminar: encuesta.attrDificCaminar,
+			attrDificJardin: encuesta.attrDificJardin,
+			attrDificAfuera: encuesta.attrDificAfuera,
+
+			attrDificDormir: encuesta.attrDificDormir,
+			attrDificSocial: encuesta.attrDificSocial,
+			attrDificTrabajo: encuesta.attrDificTrabajo,
+
+			attrDificHobbie: encuesta.attrDificHobbie,
+			attrDificSexual: encuesta.attrDificSexual,
+			attrDificCoidas: encuesta.attrDificCoidas,
+
+			attrDificRespir: encuesta.attrDificRespir,
+			attrFatiga: encuesta.attrFatiga,
+			attrHospital: encuesta.attrHospital,
+
+			attrCostoMedico: encuesta.attrCostoMedico,
+			attrEfectoSecund: encuesta.attrEfectoSecund,
+			attrCargaFamili: encuesta.attrCargaFamili,
+
+			attrAutoControl: encuesta.attrAutoControl,
+			attrPreocuparse: encuesta.attrPreocuparse,
+			attrConcentrarse: encuesta.attrConcentrarse,
+
+			attrDepresion: encuesta.attrDepresion
+		}
+
+		this.flagEditarEncuesta = true;
+		this.encuestaForm.setValue(encuestaForm);
+
+	}
+
+
+	limpiarEncuesta(){
+
+		this.flagCabmiaValorEncuesta = false;
+		this.flagEditarEncuesta = false;
+
+		let encuestaForm = {
+			attrEncId: this.conceptosService.getNotValidId(),
+			attrIsuficiencia: this.conceptosService.getNotValidId(),
+			attrHinchazon: this.conceptosService.getNotValidId(),
+			attrDesncanso: this.conceptosService.getNotValidId(),
+
+			attrDificCaminar: this.conceptosService.getNotValidId(),
+			attrDificJardin: this.conceptosService.getNotValidId(),
+			attrDificAfuera: this.conceptosService.getNotValidId(),
+
+			attrDificDormir: this.conceptosService.getNotValidId(),
+			attrDificSocial: this.conceptosService.getNotValidId(),
+			attrDificTrabajo: this.conceptosService.getNotValidId(),
+
+			attrDificHobbie: this.conceptosService.getNotValidId(),
+			attrDificSexual: this.conceptosService.getNotValidId(),
+			attrDificCoidas: this.conceptosService.getNotValidId(),
+
+			attrDificRespir: this.conceptosService.getNotValidId(),
+			attrFatiga: this.conceptosService.getNotValidId(),
+			attrHospital: this.conceptosService.getNotValidId(),
+
+			attrCostoMedico: this.conceptosService.getNotValidId(),
+			attrEfectoSecund: this.conceptosService.getNotValidId(),
+			attrCargaFamili: this.conceptosService.getNotValidId(),
+
+			attrAutoControl: this.conceptosService.getNotValidId(),
+			attrPreocuparse: this.conceptosService.getNotValidId(),
+			attrConcentrarse: this.conceptosService.getNotValidId(),
+
+			attrDepresion: this.conceptosService.getNotValidId()
+		}
+		
+		this.encuestaForm.setValue(encuestaForm);
+	}
+
+
+
+
+
+
 
 	mostrarDispositivosCardiacos(implanteCardiaco: boolean): void{
 

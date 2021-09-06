@@ -30,6 +30,11 @@ export class ConceptosService {
   conceptosOtraInterFamaco: any;
   conceptosAttr: any[];
   conceptosLHF: any[];
+  conceptosMovilidad: any[];
+  conceptosDolorMalestar: any[];
+  conceptosAnsieDepres: any[];
+  conceptosCuidadoPersonal: any[];
+  conceptosActividadCotidi: any[];
 
   constructor(private http: HttpClient) {
 
@@ -61,8 +66,14 @@ export class ConceptosService {
 															.filter(obj => obj.conCodigo.trim() === 'ITR')[0];
                     this.conceptosAttr		            = this.conceptos.filter(obj => obj.conTipo.trim() === 'ATTR');
                     this.conceptosLHF		            = this.conceptos.filter(obj => obj.conTipo.trim() === 'LHF');
-
+                    this.conceptosMovilidad         = this.conceptos.filter(obj => obj.conTipo.trim() === 'MDD');
+                    this.conceptosDolorMalestar     = this.conceptos.filter(obj => obj.conTipo.trim() === 'DMR');
+                    this.conceptosAnsieDepres     = this.conceptos.filter(obj => obj.conTipo.trim() === 'ADN');
+                    this.conceptosCuidadoPersonal     = this.conceptos.filter(obj => obj.conTipo.trim() === 'CPL');
+                    this.conceptosActividadCotidi     = this.conceptos.filter(obj => obj.conTipo.trim() === 'ACS');
                   });
   }
-
+  getNotValidId(){
+    return this.conceptosAttr[0].conNumero;
+  }
 }

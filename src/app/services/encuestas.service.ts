@@ -23,4 +23,9 @@ export class EncuestasService {
   guardarEncuesta(encuesta: Encuesta): Observable<Encuesta>{
     return this.http.post<Encuesta>(this.apUrl + this.apiUrl + 'encuesta/create',{encuesta:encuesta,userId:1})
   }
+
+  actualizarEncuesta(encuesta: Encuesta): Observable<Encuesta>{
+    return this.http.put<Encuesta>(this.apUrl + this.apiUrl + 'encuesta/update',{encuesta:encuesta,userId:1})
+  }
+
 }
