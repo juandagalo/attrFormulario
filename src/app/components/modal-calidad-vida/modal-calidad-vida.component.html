@@ -1,0 +1,72 @@
+<ng-template #modalCalidadVida let-modal>
+    <div class="modal-body">
+        <form [formGroup]="calidadVidaModal">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userVisitaControl" class="siam-input-label">Fecha de visita control</label>
+                        <input type="text" class="form-control siam-text-input-id" id="userVisitaControl" formControlName="attrFechaControlCalidad">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">Movilidad</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrMovilidad">
+                            <option *ngFor="let movilidad of conceptosService.conceptosMovilidad" [value]="movilidad.conNumero">{{movilidad.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userDolorMalestar" class="siam-input-label">Dolor/malestar</label>
+                        <select id="userDolorMalestar" class="form-control siam-select-input" formControlName="attrDolMalest">
+                            <option *ngFor="let dolorMaestar of conceptosService.conceptosDolorMalestar" [value]="dolorMaestar.conNumero">{{dolorMaestar.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userAnsiedadDepresión" class="siam-input-label">Ansiedad/Depresión</label>
+                        <select id="userAnsiedadDepresión" class="form-control siam-select-input" formControlName="attrAnsiDepre">
+                            <option *ngFor="let ansieDepres of conceptosService.conceptosAnsieDepres" [value]="ansieDepres.conNumero">{{ansieDepres.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">Cuidado personal</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrCuidPerso">
+                            <option *ngFor="let cuidadoPersonal of conceptosService.conceptosCuidadoPersonal" [value]="cuidadoPersonal.conNumero">{{cuidadoPersonal.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userDolorMalestar" class="siam-input-label">Actividades cotidianas</label>
+                        <select id="userDolorMalestar" class="form-control siam-select-input" formControlName="attrActiCotid">
+                            <option *ngFor="let actividadCotidiana of conceptosService.conceptosActividadCotidi" [value]="actividadCotidiana.conNumero">{{actividadCotidiana.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-lg siam-button" (click)="modal.close()">Cerrar</button>
+    </div>
+</ng-template>
+
+<button class="btn btn-primary btn-lg siam-button" type="button" (click)="openModal(modalCalidadVida)">Ver</button>

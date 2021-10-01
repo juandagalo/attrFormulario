@@ -505,7 +505,7 @@
     <h5 class="card-header siam-panel-head siam-title">CALIDAD DE VIDA - CONTROLES: Cuestionario EQ - 5D</h5>
     <div class="card-body siam-panel-body">
 
-        <table class="table">
+        <table class="table" *ngIf="calidadesVida.length > 0">
             <thead>
                 <tr>
                     <th scope="col" class="table-header">#</th>
@@ -515,10 +515,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let encuesta of encuestas; let i = index">
+                <tr *ngFor="let calidadVida of calidadesVida; let i = index">
+
                     <th scope="row">{{ i+1 }}</th>
-                    <td>Fecha</td>
-                    <td><a class="btn btn-primary btn-lg siam-button">Ver</a></td>
+                    <td>{{ calidadVida.attrFechaControlCalidad | date:'dd/MM/YYYY' }}</td>
+                    <td>
+                        <app-modal-calidad-vida [calidadVida]="calidadVida"></app-modal-calidad-vida>
+                    </td>
 
                 </tr>
 
@@ -527,12 +530,12 @@
 
 
 
-        <form>
+        <form [formGroup]="calidadVidaForm" (ngSubmit)="guardarCalidadVida()">
             <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label for="userVisitaControl" class="siam-input-label">Fecha de visita control</label>
-                        <input type="text" class="form-control siam-text-input-id" id="userVisitaControl">
+                        <input type="text" class="form-control siam-text-input-id" id="userVisitaControl" formControlName="attrFechaControlCalidad">
                     </div>
                 </div>
             </div>
@@ -542,7 +545,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userMovilidad" class="siam-input-label">Movilidad</label>
-                        <select id="userMovilidad" class="form-control siam-select-input">
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrMovilidad">
                             <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
                             <option *ngFor="let movilidad of conceptosService.conceptosMovilidad" [value]="movilidad.conNumero">{{movilidad.conNombre}}</option>
                         </select>
@@ -552,7 +555,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userDolorMalestar" class="siam-input-label">Dolor/malestar</label>
-                        <select id="userDolorMalestar" class="form-control siam-select-input">
+                        <select id="userDolorMalestar" class="form-control siam-select-input" formControlName="attrDolMalest">
                             <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
                             <option *ngFor="let dolorMaestar of conceptosService.conceptosDolorMalestar" [value]="dolorMaestar.conNumero">{{dolorMaestar.conNombre}}</option>
                         </select>
@@ -562,7 +565,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userAnsiedadDepresión" class="siam-input-label">Ansiedad/Depresión</label>
-                        <select id="userAnsiedadDepresión" class="form-control siam-select-input">
+                        <select id="userAnsiedadDepresión" class="form-control siam-select-input" formControlName="attrAnsiDepre">
                             <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
                             <option *ngFor="let ansieDepres of conceptosService.conceptosAnsieDepres" [value]="ansieDepres.conNumero">{{ansieDepres.conNombre}}</option>
                         </select>
@@ -575,7 +578,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userMovilidad" class="siam-input-label">Cuidado personal</label>
-                        <select id="userMovilidad" class="form-control siam-select-input">
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrCuidPerso">
                             <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
                             <option *ngFor="let cuidadoPersonal of conceptosService.conceptosCuidadoPersonal" [value]="cuidadoPersonal.conNumero">{{cuidadoPersonal.conNombre}}</option>
                         </select>
@@ -585,7 +588,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userDolorMalestar" class="siam-input-label">Actividades cotidianas</label>
-                        <select id="userDolorMalestar" class="form-control siam-select-input">
+                        <select id="userDolorMalestar" class="form-control siam-select-input" formControlName="attrActiCotid">
                             <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
                             <option *ngFor="let actividadCotidiana of conceptosService.conceptosActividadCotidi" [value]="actividadCotidiana.conNumero">{{actividadCotidiana.conNombre}}</option>
                         </select>
@@ -593,6 +596,9 @@
                 </div>
 
             </div>
+
+            <Button [disabled]="calidadVidaForm.invalid" class="btn btn-primary btn-lg siam-button" type="submit"> Guardar </Button>
+
         </form>
         <br>
 

@@ -11,6 +11,8 @@ import { HospitalizacionesService } from '../../services/hospitalizaciones.servi
 import { Hospitalizacion } from 'src/app/models/hospitalizaciones';
 import { Encuesta } from 'src/app/models/encuesta';
 import { EncuestasService } from 'src/app/services/encuestas.service';
+import { CalidadVidaService } from 'src/app/services/calidad-vida.service';
+import { CalidadVida } from 'src/app/models/calidadVida';
 
 
 @Component({
@@ -23,6 +25,8 @@ export class FormularioComponent implements OnInit {
 	hospitalizacionForm: FormGroup;
 	encuestaForm: FormGroup;
 	hisPaciente: hisPaciente;
+	calidadVidaForm: FormGroup;
+
 	conceptos: Concepto;
 	pacienteEdad: number;
 	flagExistePaciente: boolean;
@@ -31,6 +35,8 @@ export class FormularioComponent implements OnInit {
 	pacienteAttr: PacienteAttr					= {} as PacienteAttr;
 	hospitalizaciones: Hospitalizacion[]		= [];
 	encuestas: Encuesta[]						= [];
+	calidadesVida: CalidadVida[]				= [];
+
 	implanteCardiaco                            = false;
 	tieneOtroSindromeClinico                    = false;
 	tieneManifestacionesExtracardiacas          = false;
@@ -51,7 +57,8 @@ export class FormularioComponent implements OnInit {
 	             public  	conceptosService: ConceptosService,
 	             public 	pacientesService:	PacientesService,
 				 public		hospitalizacionesService: HospitalizacionesService,
-				 public		encuestaService: EncuestasService) 
+				 public		encuestaService: EncuestasService,
+				 public		calidadVidaService: CalidadVidaService) 
 	{
 	
 		// Se obtiene la información de la ruta
@@ -77,6 +84,7 @@ export class FormularioComponent implements OnInit {
 				this.loading = false;
 				this.obtenerHospitalizaciones();
 				this.obtenerEncuestas();
+				this.obtenerCalidadVida();
 			
 			},
 			(error) => {
@@ -166,6 +174,15 @@ export class FormularioComponent implements OnInit {
 			attrDepresion: ['']
 		});
 
+		this.calidadVidaForm = this.formBuilder.group({
+			attrFechaControlCalidad: ['',Validators.required],
+			attrMovilidad: ['',Validators.required],
+			attrDolMalest: ['',Validators.required],
+			attrAnsiDepre: ['',Validators.required],
+			attrCuidPerso: ['',Validators.required],
+			attrActiCotid: ['',Validators.required]
+		});
+
 		this.encuestaForm.valueChanges.subscribe(x => {
 			this.flagCabmiaValorEncuesta = true;
 		})
@@ -244,7 +261,19 @@ export class FormularioComponent implements OnInit {
 			);
 		}
 
-		
+	}
+
+
+	guardarCalidadVida(){
+		this.calidadVidaService.guardarCalidadVida(this.crearCalidadVida()).subscribe(
+			data => {
+				this.obtenerCalidadVida();
+				this.limpiarCalidadVida();
+			},
+			error => {
+				console.log(error);	
+			}
+		);
 	}
 
 	
@@ -338,12 +367,27 @@ export class FormularioComponent implements OnInit {
 			attrDesenlace: 						null ? null : 4559,
 			attrFechaFallece: 					null ? null : new Date("01/01/1999"),
 			attrEdadFallece: 					0
-		}
+		};
 
 		return pacienteAttr;
 	}
 
-	ponerValoresPorOmision(paciente){
+	crearCalidadVida(): CalidadVida{
+		const calidadVida: CalidadVida = {
+			attrNumero:					this.hisPaciente.pacNumero,
+			attrFechaControlCalidad: 	new Date(this.calidadVidaForm.get('attrFechaControlCalidad').value),
+			attrMovilidad: 				Number(this.calidadVidaForm.get('attrMovilidad').value),
+			attrDolMalest: 				Number(this.calidadVidaForm.get('attrDolMalest').value),
+			attrAnsiDepre: 				Number(this.calidadVidaForm.get('attrAnsiDepre').value),
+			attrCuidPerso: 				Number(this.calidadVidaForm.get('attrCuidPerso').value),
+			attrActiCotid: 				Number(this.calidadVidaForm.get('attrActiCotid').value)
+
+		};
+		
+		return calidadVida;
+	}
+
+	ponerValoresPorOmision(paciente): void{
 
 		let pacienteAttr  = {
 			AttrEtnia: 							paciente.attrEtnia,
@@ -381,7 +425,7 @@ export class FormularioComponent implements OnInit {
 		
 	}
 
-	obtenerHospitalizaciones(){
+	obtenerHospitalizaciones(): void{
 
 		this.hospitalizacionesService.obtenerHospitalizaciones(this.pacienteAttr.attrNumero).subscribe(
 			data => {
@@ -396,7 +440,7 @@ export class FormularioComponent implements OnInit {
 		);
 	}
 
-	obtenerEncuestas(){
+	obtenerEncuestas(): void{
 
 		this.encuestaService.obtenerEncuestas(this.pacienteAttr.attrNumero).subscribe(
 			data => {
@@ -411,7 +455,21 @@ export class FormularioComponent implements OnInit {
 		);
 	}
 
-	editarEncuesta(encuesta:Encuesta){
+	obtenerCalidadVida(): void{
+		this.calidadVidaService.obtenerCalidadVida(this.pacienteAttr.attrNumero).subscribe(
+			data => {
+				
+				this.calidadesVida = data as CalidadVida[];
+			},
+			(error)=>{
+
+				console.log(error);
+
+			}
+		);
+	}
+
+	editarEncuesta(encuesta:Encuesta): void{
 		
 		let encuestaForm = {
 			attrEncId: encuesta.attrEncId,
@@ -452,7 +510,7 @@ export class FormularioComponent implements OnInit {
 	}
 
 
-	limpiarEncuesta(){
+	limpiarEncuesta(): void{
 
 		this.flagCabmiaValorEncuesta = false;
 		this.flagEditarEncuesta = false;
@@ -494,7 +552,20 @@ export class FormularioComponent implements OnInit {
 	}
 
 
+	
+	limpiarCalidadVida(): void{
+		let calidadVidaForm = {
+			attrFechaControlCalidad: null,
+			attrMovilidad: this.conceptosService.getNotValidId(),
+			attrDolMalest: this.conceptosService.getNotValidId(),
+			attrAnsiDepre: this.conceptosService.getNotValidId(),
+			attrCuidPerso: this.conceptosService.getNotValidId(),
+			attrActiCotid: this.conceptosService.getNotValidId()
+		}
 
+		this.calidadVidaForm.setValue(calidadVidaForm);
+		
+	}
 
 
 

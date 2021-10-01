@@ -15,6 +15,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EncuestaTerminadaPipe } from './pipes/encuesta-terminada.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalCalidadVidaComponent } from './components/modal-calidad-vida/modal-calidad-vida.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { EncuestaTerminadaPipe } from './pipes/encuesta-terminada.pipe';
     FooterComponent,
     SexoPipe,
     LoadingComponent,
-    EncuestaTerminadaPipe
+    EncuestaTerminadaPipe,
+    ModalCalidadVidaComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +38,10 @@ import { EncuestaTerminadaPipe } from './pipes/encuesta-terminada.pipe';
     NoopAnimationsModule,
     MatDatepickerModule,
     MatInputModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgbModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,7 +10,7 @@
                 <div class="form-row">
                     <div class="col-3">
                         <label for="userTipoId" class="siam-input-label">Tipo de Identificación</label>
-                        <select id="userTipoId" class="form-control siam-select-input" formControlName="personIdType">
+                        <select id="userTipoId" class="siam-select-input form-control" formControlName="personIdType">
                             <option selected hidden value="">Seleccionar</option>
                             <option *ngFor="let concepto of conceptosService.conceptosTi" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
                         </select>
