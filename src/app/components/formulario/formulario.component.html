@@ -467,7 +467,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="userDiagnosticoIngresoUltHsptzn" class="siam-input-label">Diagnóstico de ingreso de ultima hospitalización</label>
-                            <ng-select formControlName="attrDiagUltimaHosp" [searchable]="true" [virtualScroll]="true">
+                            <ng-select formControlName="attrDiagUltimaHosp" [searchable]="true" [selectOnTab]="true" [markFirst]="true" [virtualScroll]="true" [closeOnSelect]="true">
                                 <ng-container *ngIf="hisPaciente.pacSexo == 1">
                                     <ng-option *ngFor="let diagnostico of conceptosService.diagnosticosHombres" [value]="diagnostico.diaNumero">
 
@@ -488,7 +488,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="userDiagnosticoEgresoUltHsptzn" class="siam-input-label">Diagnóstico de egreso de ultima hospitalización</label>
-                            <ng-select formControlName="attrDiagEgresoUltimaHosp" [searchable]="true" [virtualScroll]="true">
+                            <ng-select formControlName="attrDiagEgresoUltimaHosp" [searchable]="true" [selectOnTab]="true" [markFirst]="true" [virtualScroll]="true" [closeOnSelect]="true">
                                 <ng-container *ngIf="hisPaciente.pacSexo == 1">
                                     <ng-option *ngFor="let diagnostico of conceptosService.diagnosticosHombres" [value]="diagnostico.diaNumero">
 
@@ -512,7 +512,7 @@
                 <div class="row">
                     <div class="col">
 
-                        <Button type="submit" class="btn btn-primary btn-lg siam-button"> Guardar </Button>
+                        <Button [disabled]="hospitalizacionForm.invalid" type="submit" class="btn btn-primary btn-lg siam-button"> Guardar </Button>
 
                     </div>
                     <div class="col">
