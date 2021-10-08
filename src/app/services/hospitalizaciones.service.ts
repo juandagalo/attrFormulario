@@ -19,8 +19,10 @@ export class HospitalizacionesService {
             .pipe(map( (data:any) => data.list));
   }
 
-  guardarHospitalizacion(hospitalizacion: Hospitalizacion): Observable<Hospitalizacion>{
+  guardarHospitalizacion(hospitalizacion: Hospitalizacion): Observable<Hospitalizacion>
+  {
     return this.http.post<Hospitalizacion>(this.apUrl + this.apiUrl + 'hospitalizacion/create',{hospitalizacion:hospitalizacion,userId:1})
+    
   }
 
 }

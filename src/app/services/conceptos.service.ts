@@ -8,7 +8,7 @@ import { Concepto } from 'src/app/models/concepto';
 export class ConceptosService {
 
   apUrl 					= 'https://localhost:44377/';
-  apiUrl 					= 'api/Pacientes/getall/conceptos';
+  apiUrl 					= 'api/Pacientes/';
   userId 					= '?UserId=1';
   conceptos: Concepto[];
   conceptosTi: any[];
@@ -35,13 +35,17 @@ export class ConceptosService {
   conceptosAnsieDepres: any[];
   conceptosCuidadoPersonal: any[];
   conceptosActividadCotidi: any[];
+  diagnosticos: any[];
+  diagnosticosMujeres: any[];
+  diagnosticosHombres: any[];
+
 
   constructor(private http: HttpClient) {
 
   }
 
   getDbConceptos(): void{
-    this.http.get(this.apUrl + this.apiUrl + this.userId).toPromise()
+    this.http.get(this.apUrl + this.apiUrl + 'getall/conceptos' + this.userId).toPromise()
                   .then(data => {
                     this.conceptos = data['list'] as Concepto[];
 
@@ -71,6 +75,16 @@ export class ConceptosService {
                     this.conceptosAnsieDepres     = this.conceptos.filter(obj => obj.conTipo.trim() === 'ADN');
                     this.conceptosCuidadoPersonal     = this.conceptos.filter(obj => obj.conTipo.trim() === 'CPL');
                     this.conceptosActividadCotidi     = this.conceptos.filter(obj => obj.conTipo.trim() === 'ACS');
+                  });
+  }
+
+  getDiganosticos(){
+    this.http.get(this.apUrl + this.apiUrl + 'get/hisdiagnosticos' + this.userId).toPromise()
+                  .then(data => {
+                    this.diagnosticos = data['list'];
+                    
+                    this.diagnosticosMujeres  = this.diagnosticos.filter(obj => obj.diaSexo == 2 || obj.diaSexo == 3);
+                    this.diagnosticosHombres  = this.diagnosticos.filter(obj => obj.diaSexo == 1 || obj.diaSexo == 3);
                   });
   }
   getNotValidId(){

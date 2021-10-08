@@ -68,8 +68,6 @@ export class FormularioComponent implements OnInit {
 		// Se calcula la edad del paciente
 		this.pacienteEdad = this.ageFromDateOfBirthday(this.hisPaciente.pacFechaNac);
 			
-		// Se inicializan los conceptos desde la base de datos
-		this.conceptosService.getDbConceptos();
 	
 	}
 
@@ -218,7 +216,8 @@ export class FormularioComponent implements OnInit {
 
 	guardarHospitalizacion(){
 
-		this.hospitalizacionesService.guardarHospitalizacion(this.crearHospitalizacon()).subscribe(
+		this.hospitalizacionesService.guardarHospitalizacion(this.crearHospitalizacon())
+		.subscribe(
 			data => {
 				this.obtenerHospitalizaciones();
 				this.hospitalizacionForm.reset();
@@ -283,8 +282,8 @@ export class FormularioComponent implements OnInit {
 		    attrPacNum: this.hisPaciente.pacNumero,
 		    attrIngresoUltimaHosp: new Date(this.hospitalizacionForm.get('attrIngresoUltimaHosp').value),
 		    attrEgresoUltimaHosp: new Date(this.hospitalizacionForm.get('attrEgresoUltimaHosp').value),
-		    attrDiagUltimaHosp: new Date(this.hospitalizacionForm.get('attrDiagUltimaHosp').value),
-		    attrDiagEgresoUltimaHosp: new Date(this.hospitalizacionForm.get('attrDiagEgresoUltimaHosp').value),
+		    attrDiagUltimaHosp: Number(this.hospitalizacionForm.get('attrDiagUltimaHosp').value),
+		    attrDiagEgresoUltimaHosp: Number(this.hospitalizacionForm.get('attrDiagEgresoUltimaHosp').value),
 		};
 
 		return hospitalizacion;

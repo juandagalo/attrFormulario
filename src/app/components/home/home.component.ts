@@ -26,8 +26,10 @@ export class HomeComponent implements OnInit {
         personIdType: ['',Validators.required],
         personId: ['',Validators.required]
       })
-
-    this.conceptosService.getDbConceptos();
+      
+      //Singleton de conceptos
+      this.conceptosService.getDbConceptos();
+      this.conceptosService.getDiganosticos();
     
       
    }
