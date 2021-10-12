@@ -13,6 +13,8 @@ import { Encuesta } from 'src/app/models/encuesta';
 import { EncuestasService } from 'src/app/services/encuestas.service';
 import { CalidadVidaService } from 'src/app/services/calidad-vida.service';
 import { CalidadVida } from 'src/app/models/calidadVida';
+import { BiomarcadoresService } from 'src/app/services/biomarcadores.service';
+import { Biomarcador } from '../../models/biomarcador';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class FormularioComponent implements OnInit {
 	encuestaForm: FormGroup;
 	hisPaciente: hisPaciente;
 	calidadVidaForm: FormGroup;
+	biomarcadoresForm: FormGroup;
 
 	conceptos: Concepto;
 	pacienteEdad: number;
@@ -36,6 +39,7 @@ export class FormularioComponent implements OnInit {
 	hospitalizaciones: Hospitalizacion[]		= [];
 	encuestas: Encuesta[]						= [];
 	calidadesVida: CalidadVida[]				= [];
+	biomarcadores: Biomarcador[]				= [];
 
 	implanteCardiaco                            = false;
 	tieneOtroSindromeClinico                    = false;
@@ -48,6 +52,7 @@ export class FormularioComponent implements OnInit {
 	tieneHospitalizacionesFCardiaca             = false;
 	formularioMlfh: any                         = {};
 	loading										= true;
+	tieneBiomarcador							= false;
 	
 	
 	constructor( private  	forumlarioMLFHService: FormularioMlfhService,
@@ -58,7 +63,8 @@ export class FormularioComponent implements OnInit {
 	             public 	pacientesService:	PacientesService,
 				 public		hospitalizacionesService: HospitalizacionesService,
 				 public		encuestaService: EncuestasService,
-				 public		calidadVidaService: CalidadVidaService) 
+				 public		calidadVidaService: CalidadVidaService,
+				 public 	biomarcadoresServices: BiomarcadoresService) 
 	{
 	
 		// Se obtiene la información de la ruta
@@ -83,10 +89,12 @@ export class FormularioComponent implements OnInit {
 				this.obtenerHospitalizaciones();
 				this.obtenerEncuestas();
 				this.obtenerCalidadVida();
+				this.obtenerBiomarcadores();
 			
 			},
 			(error) => {
-			
+				console.log(error);
+				
 				this.pacienteAttr  = {} as PacienteAttr;
 				this.flagExistePaciente = false;
 			
@@ -94,15 +102,87 @@ export class FormularioComponent implements OnInit {
 		);
 	
 			
-		this.routerAtive.params.subscribe(params => {
-			this.getFormulario();
+		// this.routerAtive.params.subscribe(params => {
+		// 	this.getFormulario();
+		// });
+		this.crearFormularios();
+		this.onChanges();
+	}
+
+	onChanges(): void {
+
+		this.attrForm.get('AttrImplanteDispositivo').valueChanges.subscribe(val => {
+
+			if (val != this.conceptosService.conceptosNo.conNumero) {
+				this.mostrarDispositivosCardiacos(true);
+			}else{
+				this.mostrarDispositivosCardiacos(false);
+			}
 		});
+
+		this.attrForm.get('AttrFormaSindClinico').valueChanges.subscribe(val => {
+
+			if (val == this.conceptosService.conceptosOtroSindClinico.conNumero) {
+				this.otroSindromeClinico(true);
+			}else{
+				this.otroSindromeClinico(false);
+			}
+		});
+
+		this.attrForm.get('AttrManifestExtracardiaca').valueChanges.subscribe(val => {
+
+			if (val != this.conceptosService.conceptosNo.conNumero) {
+				this.mostrarManifestacionesExtracardiacas(true);
+			}else{
+				this.mostrarManifestacionesExtracardiacas(false);
+			}
+		});
+
+		this.attrForm.get('AttrTipoManifestExtracardiaca').valueChanges.subscribe(val => {
+
+			if (val == this.conceptosService.conceptosOtraManifesCardi.conNumero) {
+				this.otrasManifestacionesExtracardiacas(true);
+			}else{
+				this.otrasManifestacionesExtracardiacas(false);
+			}
+		});
+
+		this.attrForm.get('AttrGrosorVentri').valueChanges.subscribe(val => {
+
+			if (val != this.conceptosService.conceptosNo.conNumero) {
+				this.mostrarGrosorVentriculoIzquierdo(true);
+			}else{
+				this.mostrarGrosorVentriculoIzquierdo(false);
+			}
+		});
+
+		this.attrForm.get('AttrAttrCm').valueChanges.subscribe(val => {
+
+			if (val != this.conceptosService.conceptosNo.conNumero) {
+				this.mostrarAttr(true);
+			}else{
+				this.mostrarAttr(false);
+			}
+		});
+
+		this.attrForm.get('AttrInterFamaco').valueChanges.subscribe(val => {
+
+			if (val == this.conceptosService.conceptosOtraInterFamaco.conNumero) {
+				this.otraInvervencionFarmacologica(true);
+			}else{
+				this.otraInvervencionFarmacologica(false);
+			}
+		});
+
+	}
+
+	crearFormularios():void{
+
 		this.attrForm = this.formBuilder.group({
 		
 			AttrEtnia: ['', Validators.required],
 			AttrOcupacion: ['', Validators.required],
 			AttrFechaPrimConsul: ['', Validators.required],
-			AttrComorbilidad: ['', Validators.required],
 			AttrImplanteDispositivo: ['', Validators.required],
 			AttrTipoImplanteDispositivo: [''],
 			AttrFormaSindClinico: ['', Validators.required],
@@ -111,11 +191,9 @@ export class FormularioComponent implements OnInit {
 			AttrTipoManifestExtracardiaca: [''],
 			AttrOtroTipoManifestExtracardiaca: [''],
 			AttrManifestElectro: ['', Validators.required],
-			AttrNTproBN: ['', Validators.required],
-			AttrTroponinT: ['', Validators.required],
 			AttrGrosorVentri: ['', Validators.required],
-			AttrFracEyecc: [''],
-			AttrDeformLong: [''],
+			AttrFracEyecc: ['',Validators.max(1)],
+			AttrDeformLong: ['',Validators.max(1)],
 			AttrResoNucleGodolinio: ['', Validators.required],
 			AttrTipoAnormGadolinio: [''],
 			AttrGammagr: ['', Validators.required],
@@ -184,6 +262,12 @@ export class FormularioComponent implements OnInit {
 		this.encuestaForm.valueChanges.subscribe(x => {
 			this.flagCabmiaValorEncuesta = true;
 		})
+		
+		this.biomarcadoresForm = this.formBuilder.group({
+			attrNtProBnp: ['',Validators.required],
+			attrTroponinT: ['',Validators.required]
+		 });
+
 	}
 
 	getFormulario(): void{
@@ -235,7 +319,8 @@ export class FormularioComponent implements OnInit {
 
 		if (!this.flagEditarEncuesta) {
 
-			this.encuestaService.guardarEncuesta(encuestaAttr).subscribe(
+			this.encuestaService.guardarEncuesta(encuestaAttr)
+			.subscribe(
 				data => {
 					this.obtenerEncuestas();
 					this.limpiarEncuesta();
@@ -275,6 +360,19 @@ export class FormularioComponent implements OnInit {
 		);
 	}
 
+	guardarBiomarcadores(){
+		this.biomarcadoresServices.guardarBiomarcadores(this.crearBiomarcadores())
+		.subscribe(
+			data => {
+				this.obtenerBiomarcadores();
+				this.limpiarBiomarcadores();
+			},
+			error => {
+				console.log(error);	
+			}
+		);
+	}
+
 	
 
 	crearHospitalizacon(): Hospitalizacion{
@@ -287,6 +385,17 @@ export class FormularioComponent implements OnInit {
 		};
 
 		return hospitalizacion;
+	}
+
+	crearBiomarcadores(): Biomarcador{
+		const biomarcador: Biomarcador = {
+		    attrPacNum: this.hisPaciente.pacNumero,
+		    attrNtProBnp: Number(this.biomarcadoresForm.get('attrNtProBnp').value),
+		    attrTroponinT: Number(this.biomarcadoresForm.get('attrTroponinT').value),
+			CreateDate: new Date()
+		};
+
+		return biomarcador;
 	}
 
 	crearEncuesta(): Encuesta{
@@ -334,7 +443,6 @@ export class FormularioComponent implements OnInit {
 			attrEtnia: 							Number(this.attrForm.get('AttrEtnia').value),
 			attrOcupacion: 						this.attrForm.get('AttrOcupacion').value,
 			attrFechaPrimConsul:				new Date(this.attrForm.get('AttrFechaPrimConsul').value),
-			attrComorbilidad: 					Number(this.attrForm.get('AttrComorbilidad').value),
 			attrImplanteDispositivo: 			Number(this.attrForm.get('AttrImplanteDispositivo').value),
 			attrTipoImplanteDispositivo: 		this.attrForm.get('AttrTipoImplanteDispositivo').value ?
 													Number(this.attrForm.get('AttrTipoImplanteDispositivo').value) : this.conceptosService.getNotValidId(),
@@ -346,8 +454,6 @@ export class FormularioComponent implements OnInit {
 			attrOtroTipoManifestExtracardiaca: 	this.attrForm.get('AttrOtroTipoManifestExtracardiaca').value,
 			attrManifestElectro: 				this.attrForm.get('AttrManifestElectro').value ?
 													Number(this.attrForm.get('AttrManifestElectro').value) : this.conceptosService.getNotValidId(),
-			attrNTproBN: 						this.attrForm.get('AttrNTproBN').value,
-			attrTroponinT: 						this.attrForm.get('AttrTroponinT').value,
 			attrGrosorVentri: 					Number(this.attrForm.get('AttrGrosorVentri').value),
 			attrFracEyecc: 						Number(this.attrForm.get('AttrFracEyecc').value),
 			attrDeformLong: 					Number(this.attrForm.get('AttrDeformLong').value),
@@ -392,7 +498,6 @@ export class FormularioComponent implements OnInit {
 			AttrEtnia: 							paciente.attrEtnia,
 			AttrOcupacion: 						paciente.attrOcupacion,
 			AttrFechaPrimConsul:				paciente.attrFechaPrimConsul,
-			AttrComorbilidad: 					paciente.attrComorbilidad,
 			AttrImplanteDispositivo: 			paciente.attrImplanteDispositivo,
 			AttrTipoImplanteDispositivo: 		paciente.attrTipoImplanteDispositivo,
 			AttrFormaSindClinico: 				paciente.attrFormaSindClinico,
@@ -401,8 +506,6 @@ export class FormularioComponent implements OnInit {
 			AttrTipoManifestExtracardiaca: 		paciente.attrTipoManifestExtracardiaca,
 			AttrOtroTipoManifestExtracardiaca: 	paciente.attrOtroTipoManifestExtracardiaca,
 			AttrManifestElectro: 				paciente.attrManifestElectro,
-			AttrNTproBN: 						paciente.attrNTproBN,
-			AttrTroponinT: 						paciente.attrTroponinT,
 			AttrGrosorVentri: 					paciente.attrGrosorVentri,
 			AttrFracEyecc: 						paciente.attrFracEyecc,
 			AttrDeformLong: 					paciente.attrDeformLong,
@@ -459,6 +562,21 @@ export class FormularioComponent implements OnInit {
 			data => {
 				
 				this.calidadesVida = data as CalidadVida[];
+			},
+			(error)=>{
+
+				console.log(error);
+
+			}
+		);
+	}
+
+
+	obtenerBiomarcadores(): void{
+		this.biomarcadoresServices.obtenerBiomarcadores(this.pacienteAttr.attrNumero).subscribe(
+			data => {
+				
+				this.biomarcadores = data as Biomarcador[];
 			},
 			(error)=>{
 
@@ -566,6 +684,9 @@ export class FormularioComponent implements OnInit {
 		
 	}
 
+	limpiarBiomarcadores():void{
+		this.tieneBiomarcador = false;
+	}
 
 
 
@@ -577,6 +698,7 @@ export class FormularioComponent implements OnInit {
 			
 		}
 		this.implanteCardiaco = implanteCardiaco;
+		
 	}
 
 	otroSindromeClinico(tieneOtroSindromeClinico: boolean): void{
@@ -606,7 +728,7 @@ export class FormularioComponent implements OnInit {
 
 	mostrarGrosorVentriculoIzquierdo(tieneGrosorVentriculoIzquierdo: boolean): void{
 
-		this.tieneGrosorVentriculoIzquierdo = tieneGrosorVentriculoIzquierdo;
+		this.tieneGrosorVentriculoIzquierdo = tieneGrosorVentriculoIzquierdo;		
 
 	}
 
@@ -628,6 +750,10 @@ export class FormularioComponent implements OnInit {
 
 	mostrarHospitalizacionesFCardiaca(tieneHospitalizacionesFCardiaca: boolean): void{
 		this.tieneHospitalizacionesFCardiaca = tieneHospitalizacionesFCardiaca;
+	}
+
+	mostrarBiomarcador(tieneBiomarcador):void{
+		this.tieneBiomarcador = tieneBiomarcador;
 	}
 
 	public ageFromDateOfBirthday(dateOfBirth: any): number {

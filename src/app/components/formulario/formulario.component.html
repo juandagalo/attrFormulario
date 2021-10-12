@@ -65,142 +65,97 @@
     <div class="card siam-panel">
         <h5 class="card-header siam-panel-head siam-title">Variables Clínicas</h5>
         <div class="card-body siam-panel-body">
-            <form>
+            <div class="row">
 
-                <div class="row">
-
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="userConsultDate" class="siam-input-label">Fecha de primera consulta en el programa de falla cardíaca </label>
-                            <input type="text" class="form-control siam-text-input-id" id="userConsultDate" formControlName="AttrFechaPrimConsul">
-                        </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userConsultDate" class="siam-input-label">Fecha de primera consulta en el programa de falla cardíaca </label>
+                        <input type="text" class="form-control siam-text-input-id" id="userConsultDate" formControlName="AttrFechaPrimConsul">
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="userComorbidity" class="siam-input-label">Comorbilidades</label>
-                            <select id="userComorbidity" class="form-control siam-select-input" formControlName="AttrComorbilidad">
-                          <option selected hidden>Seleccionar</option>
-                          <option *ngFor="let concepto of conceptosService.conceptosComorbilidad" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
-                        </select>
-                        </div>
-                    </div>
-
                 </div>
 
-                <div class="row">
+            </div>
+
+            <div class="row">
 
 
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="userDispositivoCardiaco" class="siam-input-label">Implante de dispositivos cardíacos</label>
-                            <select id="userDispositivoCardiaco" class="form-control siam-select-input" formControlName="AttrImplanteDispositivo">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userDispositivoCardiaco" class="siam-input-label">Implante de dispositivos cardíacos</label>
+                        <select id="userDispositivoCardiaco" class="form-control siam-select-input" formControlName="AttrImplanteDispositivo">
                                 <option hidden>Seleccionar</option>
-                                <option (click)="mostrarDispositivosCardiacos(concepto.conParametro)" *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
+                                <option *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
                         </select>
-                        </div>
                     </div>
+                </div>
 
-                    <div class="col" *ngIf="implanteCardiaco || pacienteAttr.attrImplanteDispositivo != conceptosService.conceptosNo.conNumero">
-                        <div class="form-group">
-                            <label for="userDispositivoCardiacoType" class="siam-input-label">Tipo de dispositivos cardíacos</label>
-                            <select id="userDispositivoCardiacoType" class="form-control siam-select-input" formControlName="AttrTipoImplanteDispositivo">
+                <div class="col" *ngIf="implanteCardiaco || pacienteAttr.attrImplanteDispositivo == conceptosService.conceptosNo.conNumero">
+                    <div class="form-group">
+                        <label for="userDispositivoCardiacoType" class="siam-input-label">Tipo de dispositivos cardíacos</label>
+                        <select id="userDispositivoCardiacoType" class="form-control siam-select-input" formControlName="AttrTipoImplanteDispositivo">
                             <option hidden>Seleccionar</option>
                             <option *ngFor="let concepto of conceptosService.conceptosDispCardiaco" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
                           </select>
-                        </div>
                     </div>
-
                 </div>
 
+            </div>
 
-                <div class="row">
 
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="userSindromeClinico" class="siam-input-label">Forma de presentación del síndrome clínico</label>
-                            <select id="userSindromeClinico" class="form-control siam-select-input" formControlName="AttrFormaSindClinico">
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userSindromeClinico" class="siam-input-label">Forma de presentación del síndrome clínico</label>
+                        <select id="userSindromeClinico" class="form-control siam-select-input" formControlName="AttrFormaSindClinico">
                             <option hidden>Seleccionar</option>
-                            <option (click)="otroSindromeClinico(concepto.conParametro)" *ngFor="let concepto of conceptosService.conceptosSindClinico" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
+                            <option *ngFor="let concepto of conceptosService.conceptosSindClinico" [value]="concepto.conNumero" >{{ concepto.conNombre }}</option>
                         </select>
-                        </div>
                     </div>
-
-                    <div class="col" *ngIf="tieneOtroSindromeClinico || pacienteAttr.attrFormaSindClinico == conceptosService.conceptosOtroSindClinico.conNumero">
-                        <div class="form-group">
-                            <label for="userSindromeClinicootro" class="siam-input-label">¿Cual?</label>
-                            <input type="text" class="form-control siam-text-input-id" id="userSindromeClinicootro" formControlName="AttrOtraFormaSindClinico">
-                        </div>
-                    </div>
-
                 </div>
 
-
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="userManifestacionesExtracardiacas" class="siam-input-label">Manifestaciones extracardíacas</label>
-                            <select id="userManifestacionesExtracardiacas" class="form-control siam-select-input" formControlName="AttrManifestExtracardiaca">
-                          <option hidden>Seleccionar</option>
-                          <option (click)="mostrarManifestacionesExtracardiacas(concepto.conParametro)" *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero" >{{ concepto.conNombre }}</option>
-                        </select>
-                        </div>
+                <div class="col" *ngIf="tieneOtroSindromeClinico || pacienteAttr.attrFormaSindClinico == conceptosService.conceptosOtroSindClinico.conNumero">
+                    <div class="form-group">
+                        <label for="userSindromeClinicootro" class="siam-input-label">¿Cual?</label>
+                        <input type="text" class="form-control siam-text-input-id" id="userSindromeClinicootro" formControlName="AttrOtraFormaSindClinico">
                     </div>
-                    <div class="col" *ngIf="tieneManifestacionesExtracardiacas  || pacienteAttr.attrManifestExtracardiaca != conceptosService.conceptosNo.conNumero">
-                        <div class="form-group">
-                            <label for="userManifestacionesExtracardiacasType" class="siam-input-label">Tipo de manifestaciones extracardíacas</label>
-                            <select id="userManifestacionesExtracardiacasType" class="form-control siam-select-input" formControlName="AttrTipoManifestExtracardiaca">
-                          <option hidden>Seleccionar</option>
-                          <option (click)="otrasManifestacionesExtracardiacas(concepto.conParametro)" *ngFor="let concepto of conceptosService.conceptosManifesCardi" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="col" *ngIf="tieneOtrasManifestacionesExtracardiacas || pacienteAttr.attrTipoManifestExtracardiaca == conceptosService.conceptosOtraManifesCardi.conNumero">
-                        <div class="form-group">
-                            <label for="userManifestacionesExtracardiacasOtroTipo" class="siam-input-label">¿Cual?</label>
-                            <input type="text" class="form-control siam-text-input-id" id="userManifestacionesExtracardiacasOtroTipo" formControlName="AttrOtroTipoManifestExtracardiaca">
-                        </div>
-                    </div>
-
                 </div>
 
-            </form>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userManifestacionesExtracardiacas" class="siam-input-label">Manifestaciones extracardíacas</label>
+                        <select id="userManifestacionesExtracardiacas" class="form-control siam-select-input" formControlName="AttrManifestExtracardiaca">
+                          <option hidden>Seleccionar</option>
+                          <option *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero" >{{ concepto.conNombre }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col" *ngIf="tieneManifestacionesExtracardiacas  || pacienteAttr.attrManifestExtracardiaca == conceptosService.conceptosNo.conNumero">
+                    <div class="form-group">
+                        <label for="userManifestacionesExtracardiacasType" class="siam-input-label">Tipo de manifestaciones extracardíacas</label>
+                        <select id="userManifestacionesExtracardiacasType" class="form-control siam-select-input" formControlName="AttrTipoManifestExtracardiaca">
+                          <option hidden>Seleccionar</option>
+                          <option *ngFor="let concepto of conceptosService.conceptosManifesCardi" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col" *ngIf="tieneOtrasManifestacionesExtracardiacas || pacienteAttr.attrTipoManifestExtracardiaca == conceptosService.conceptosOtraManifesCardi.conNumero">
+                    <div class="form-group">
+                        <label for="userManifestacionesExtracardiacasOtroTipo" class="siam-input-label">¿Cual?</label>
+                        <input type="text" class="form-control siam-text-input-id" id="userManifestacionesExtracardiacasOtroTipo" formControlName="AttrOtroTipoManifestExtracardiaca">
+                    </div>
+                </div>
+
+            </div>
             <br>
 
         </div>
     </div>
-    <br>
-    <br>
-
-
-
-    <div class="card siam-panel">
-        <h5 class="card-header siam-panel-head siam-title">Biomarcadores</h5>
-        <div class="card-body siam-panel-body">
-            <form>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="userProBNP" class="siam-input-label">NT-proBNP</label>
-                            <input type="number" class="form-control siam-text-input-id" id="userProBNP" formControlName="AttrNTproBN">
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="userTroponinT" class="siam-input-label">Troponin T</label>
-                            <input type="number" class="form-control siam-text-input-id" id="userTroponinT" formControlName="AttrTroponinT">
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-            <br>
-
-        </div>
-    </div>
-
     <br>
     <br>
 
@@ -217,13 +172,15 @@
                         <label for="userGrosorVentriculoIzquierdo" class="siam-input-label">Grosor de cualquier pared del ventrículo izquierdo ≥ 14 mm</label>
                         <select id="userGrosorVentriculoIzquierdo" class="form-control siam-select-input" formControlName="AttrGrosorVentri">
                             <option hidden>Seleccionar</option>
-                            <option (click)="mostrarGrosorVentriculoIzquierdo(concepto.conParametro)" *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
+                            <option *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <div class="row" *ngIf="tieneGrosorVentriculoIzquierdo || pacienteAttr.attrGrosorVentri != conceptosService.conceptosNo.conNumero">
+
+
+            <div class="row" *ngIf="tieneGrosorVentriculoIzquierdo || pacienteAttr.attrGrosorVentri == conceptosService.conceptosNo.conNumero">
 
                 <div class="col">
                     <div class="form-group">
@@ -324,14 +281,14 @@
                         <label for="userAttr" class="siam-input-label">ATTR-CM</label>
                         <select id="userAttr" class="form-control siam-select-input" formControlName="AttrAttrCm">
                             <option hidden>Seleccionar</option>
-                            <option (click)="mostrarAttr(concepto.conParametro)" *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
+                            <option *ngFor="let concepto of conceptosService.conceptosSiNo" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
                         </select>
                     </div>
                 </div>
 
             </div>
 
-            <div class="row" *ngIf="tieneAtter || pacienteAttr.attrAttrCm != conceptosService.conceptosNo.conNumero">
+            <div class="row" *ngIf="tieneAtter || pacienteAttr.attrAttrCm == conceptosService.conceptosNo.conNumero">
 
                 <div class="col">
                     <div class="form-group">
@@ -403,6 +360,99 @@
     <br>
     <hr>
 </form>
+
+
+<div class="col">
+    <div class="form-group">
+        <label for="userComorbidity" class="siam-input-label">Comorbilidades</label>
+        <select id="userComorbidity" class="form-control siam-select-input">
+      <option selected hidden>Seleccionar</option>
+      <option *ngFor="let concepto of conceptosService.conceptosComorbilidad" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
+    </select>
+    </div>
+</div>
+
+
+<div class="card siam-panel">
+    <h5 class="card-header siam-panel-head siam-title">Biomarcadores</h5>
+    <div class="card-body siam-panel-body">
+        <table class="table" *ngIf="biomarcadores.length > 0">
+            <thead>
+                <tr>
+
+                    <th scope="col" class="table-header">#</th>
+                    <th scope="col" class="table-header">Fecha Registro</th>
+                    <th scope="col" class="table-header">Valor NT-proBNP</th>
+                    <th scope="col" class="table-header">Valor Troponin T</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let biomarcador of biomarcadores; let i = index">
+
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{biomarcador.createDate|date:'dd/MM/YYYY'}}</td>
+                    <td>{{biomarcador.attrNtProBnp}}</td>
+                    <td>{{biomarcador.attrTroponinT}}</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+        <br>
+        <div class="row">
+
+            <div class="col">
+
+                <div class="form-group">
+                    <Button *ngIf="!tieneBiomarcador" class="btn btn-primary btn-lg siam-button" (click)="mostrarBiomarcador(true)"> Nuevo registro </Button>
+                </div>
+
+            </div>
+
+        </div>
+        <div *ngIf="tieneBiomarcador">
+            <form [formGroup]="biomarcadoresForm" (ngSubmit)="guardarBiomarcadores()">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userProBNP" class="siam-input-label">NT-proBNP</label>
+                            <input type="number" class="form-control siam-text-input-id" id="userProBNP" formControlName="attrNtProBnp" placeholder="1000">
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userTroponinT" class="siam-input-label">Troponin T</label>
+                            <input type="number" class="form-control siam-text-input-id" id="userTroponinT" formControlName="attrTroponinT" placeholder="0.0001">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+
+                        <Button [disabled]="biomarcadoresForm.invalid" type="submit" class="btn btn-primary btn-lg siam-button"> Guardar </Button>
+
+                    </div>
+                    <div class="col">
+
+                        <Button class="btn btn-primary btn-lg siam-button" (click)="mostrarBiomarcador(false)"> Cancelar </Button>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <br>
+
+    </div>
+</div>
+
+<br>
+<br>
 
 <div class="card siam-panel">
     <h5 class="card-header siam-panel-head siam-title">Hospitalizaciones</h5>

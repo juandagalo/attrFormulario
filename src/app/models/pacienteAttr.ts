@@ -3,7 +3,6 @@ export type PacienteAttr = {
     attrEtnia: number;
     attrOcupacion: string;
     attrFechaPrimConsul: Date;
-    attrComorbilidad: number;
     attrImplanteDispositivo: number;
     attrTipoImplanteDispositivo: number;
     attrFormaSindClinico: number;
@@ -12,8 +11,6 @@ export type PacienteAttr = {
     attrTipoManifestExtracardiaca: number;
     attrOtroTipoManifestExtracardiaca: string;
     attrManifestElectro: number;
-    attrNTproBN: number;
-    attrTroponinT: number;
     attrGrosorVentri: number;
     attrFracEyecc: number;
     attrDeformLong: number;
