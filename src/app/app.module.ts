@@ -17,11 +17,17 @@ import { FormularioComponent } from './components/formulario/formulario.componen
 import { FooterComponent } from './components/footer/footer.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ModalCalidadVidaComponent } from './components/modal-calidad-vida/modal-calidad-vida.component';
+import { FormularioPersonaComponent } from './components/formulario-persona/formulario-persona.component';
+import { BiomarcadoresComponent } from './components/biomarcadores/biomarcadores.component';
+import { HospitalizacionesComponent } from './components/hospitalizaciones/hospitalizaciones.component';
+import { CalidadDeVidaComponent } from './components/calidad-de-vida/calidad-de-vida.component';
 
 import { SexoPipe } from './pipes/sexo.pipe';
 import { EncuestaTerminadaPipe } from './pipes/encuesta-terminada.pipe';
 import { DatePipe } from '@angular/common';
 import { HospitalizacionPipe } from './pipes/hospitalizacion.pipe';
+import { EncuestaAttrComponent } from './components/encuesta-attr/encuesta-attr.component';
+
 
 
 @NgModule({
@@ -34,7 +40,12 @@ import { HospitalizacionPipe } from './pipes/hospitalizacion.pipe';
     LoadingComponent,
     EncuestaTerminadaPipe,
     ModalCalidadVidaComponent,
-    HospitalizacionPipe
+    HospitalizacionPipe,
+    FormularioPersonaComponent,
+    BiomarcadoresComponent,
+    HospitalizacionesComponent,
+    CalidadDeVidaComponent,
+    EncuestaAttrComponent
   ],
   imports: [
     BrowserModule,

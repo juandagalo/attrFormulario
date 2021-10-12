@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ConceptosService } from 'src/app/services/conceptos.service';
 
 @Pipe({
-  name: 'hospitalizacion'
+  name: 'hospitalizacion',
+  pure: false
 })
 export class HospitalizacionPipe implements PipeTransform {
 

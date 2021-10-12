@@ -1,0 +1,77 @@
+<div class="card siam-panel">
+    <h5 class="card-header siam-panel-head siam-title">Biomarcadores</h5>
+    <div class="card-body siam-panel-body">
+        <table class="table" *ngIf="biomarcadores.length > 0">
+            <thead>
+                <tr>
+
+                    <th scope="col" class="table-header">#</th>
+                    <th scope="col" class="table-header">Fecha Registro</th>
+                    <th scope="col" class="table-header">Valor NT-proBNP</th>
+                    <th scope="col" class="table-header">Valor Troponin T</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let biomarcador of biomarcadores; let i = index">
+
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{biomarcador.createDate|date:'dd/MM/YYYY'}}</td>
+                    <td>{{biomarcador.attrNtProBnp}}</td>
+                    <td>{{biomarcador.attrTroponinT}}</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+        <br>
+        <div class="row">
+
+            <div class="col">
+
+                <div class="form-group">
+                    <Button *ngIf="!tieneBiomarcador" class="btn btn-primary btn-lg siam-button" (click)="mostrarBiomarcador(true)"> Nuevo registro </Button>
+                </div>
+
+            </div>
+
+        </div>
+        <div *ngIf="tieneBiomarcador">
+            <form [formGroup]="biomarcadoresForm" (ngSubmit)="guardarBiomarcadores()">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userProBNP" class="siam-input-label">NT-proBNP</label>
+                            <input type="number" class="form-control siam-text-input-id" id="userProBNP" formControlName="attrNtProBnp" placeholder="1000">
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userTroponinT" class="siam-input-label">Troponin T</label>
+                            <input type="number" class="form-control siam-text-input-id" id="userTroponinT" formControlName="attrTroponinT" placeholder="0.0001">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+
+                        <Button [disabled]="biomarcadoresForm.invalid" type="submit" class="btn btn-primary btn-lg siam-button"> Guardar </Button>
+
+                    </div>
+                    <div class="col">
+
+                        <Button class="btn btn-primary btn-lg siam-button" (click)="mostrarBiomarcador(false)"> Cancelar </Button>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <br>
+
+    </div>
+</div>

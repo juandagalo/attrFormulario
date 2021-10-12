@@ -1,0 +1,125 @@
+<div class="card siam-panel">
+    <h5 class="card-header siam-panel-head siam-title">Hospitalizaciones</h5>
+    <div class="card-body siam-panel-body">
+        <table class="table" *ngIf="hospitalizaciones.length > 0">
+            <thead>
+                <tr>
+                    <th scope="col" class="table-header">#</th>
+                    <th scope="col" class="table-header">Fecha Ingreso Hospitalización</th>
+                    <th scope="col" class="table-header">Fecha Egreso Hospitalización</th>
+                    <th scope="col" class="table-header">Diagnostico Ingreso Hospitalización</th>
+                    <th scope="col" class="table-header">Diagnostico Egreso Hospitalización</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let hospitalizacion of hospitalizaciones; let i = index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{hospitalizacion.attrIngresoUltimaHosp | date:'dd/MM/YYYY'}}</td>
+                    <td>{{hospitalizacion.attrEgresoUltimaHosp | date:'dd/MM/YYYY'}}</td>
+                    <td>{{hospitalizacion.attrDiagUltimaHosp | hospitalizacion}}</td>
+                    <td>{{hospitalizacion.attrDiagEgresoUltimaHosp| hospitalizacion}}</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+        <br>
+        <div class="row">
+
+            <div class="col">
+
+                <div class="form-group">
+                    <Button *ngIf="!tieneHospitalizacionesFCardiaca" class="btn btn-primary btn-lg siam-button" (click)="mostrarHospitalizacionesFCardiaca(true)"> Nueva Hospitalización </Button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="tieneHospitalizacionesFCardiaca">
+
+            <form [formGroup]="hospitalizacionForm" (ngSubmit)="guardarHospitalizacion()">
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userFechaIngresoUltHsptzn" class="siam-input-label">Fecha del ingreso a ultima hospitalización</label>
+                            <input type="text" class="form-control siam-text-input-id" id="userFechaIngresoUltHsptzn" formControlName="attrIngresoUltimaHosp">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userFechaEgresoUltHsptzn" class="siam-input-label">Fecha de egreso de la ultima hospitalización</label>
+                            <input type="text" class="form-control siam-text-input-id" id="userFechaEgresoUltHsptzn" formControlName="attrEgresoUltimaHosp">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userDiagnosticoIngresoUltHsptzn" class="siam-input-label">Diagnóstico de ingreso de ultima hospitalización</label>
+                            <ng-select formControlName="attrDiagUltimaHosp" [searchable]="true" [selectOnTab]="true" [markFirst]="true" [virtualScroll]="true" [closeOnSelect]="true">
+                                <ng-container *ngIf="hisPaciente.pacSexo == 1">
+                                    <ng-option *ngFor="let diagnostico of conceptosService.diagnosticosHombres" [value]="diagnostico.diaNumero">
+
+                                        {{diagnostico.diaNombre}}
+
+                                    </ng-option>
+                                </ng-container>
+                                <ng-container *ngIf="hisPaciente.pacSexo == 2">
+                                    <ng-option *ngFor="let diagnostico of conceptosService.diagnosticosMujeres" [value]="diagnostico.diaNumero">
+
+                                        {{diagnostico.diaNombre}}
+
+                                    </ng-option>
+                                </ng-container>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="userDiagnosticoEgresoUltHsptzn" class="siam-input-label">Diagnóstico de egreso de ultima hospitalización</label>
+                            <ng-select formControlName="attrDiagEgresoUltimaHosp" [searchable]="true" [selectOnTab]="true" [markFirst]="true" [virtualScroll]="true" [closeOnSelect]="true">
+                                <ng-container *ngIf="hisPaciente.pacSexo == 1">
+                                    <ng-option *ngFor="let diagnostico of conceptosService.diagnosticosHombres" [value]="diagnostico.diaNumero">
+
+                                        {{diagnostico.diaNombre}}
+
+                                    </ng-option>
+                                </ng-container>
+                                <ng-container *ngIf="hisPaciente.pacSexo == 2">
+                                    <ng-option *ngFor="let diagnostico of conceptosService.diagnosticosMujeres" [value]="diagnostico.diaNumero">
+
+                                        {{diagnostico.diaNombre}}
+
+                                    </ng-option>
+                                </ng-container>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col">
+
+                        <Button [disabled]="hospitalizacionForm.invalid" type="submit" class="btn btn-primary btn-lg siam-button"> Guardar </Button>
+
+                    </div>
+                    <div class="col">
+
+                        <Button class="btn btn-primary btn-lg siam-button" (click)="mostrarHospitalizacionesFCardiaca(false)"> Cancelar </Button>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+
+        <!-- <Button *ngIf="tieneHospitalizacionesFCardiaca" class="btn btn-primary btn-lg siam-button">Agregar</Button> -->
+    </div>
+</div>

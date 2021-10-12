@@ -1,0 +1,318 @@
+<div class="card siam-panel">
+    <h5 class="card-header siam-panel-head siam-title">Cuestionario Minnesota Living with Heart Failure (MLFH)</h5>
+    <div class="card-body siam-panel-body">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="table-header">#</th>
+                    <th scope="col" class="table-header">Fecha creación encuesta</th>
+                    <th scope="col" class="table-header">Fecha actualización encuesta</th>
+                    <th scope="col" class="table-header">Terminado</th>
+                    <th scope="col" class="table-header">Acción</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let encuesta of encuestas; let i = index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{encuesta.createDate | date:'dd/MM/YYYY'}}</td>
+                    <td>{{encuesta.updateDate | date:'dd/MM/YYYY'}}</td>
+                    <td>{{encuesta | encuestaTerminada}}</td>
+                    <td><a (click)="editarEncuesta(encuesta)" class="btn btn-primary btn-lg siam-button">Editar</a></td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
+
+        <form [formGroup]="encuestaForm" (ngSubmit)="guardarEncuesta()">
+            <input type="text" hidden formControlName="attrEncId">
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿La insuficiencia cardíaca le ha impedido vivir como quería durante el último mes: </label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrIsuficiencia">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Causando hinchazón en los tobillos, las piernas, etc.</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrHinchazon">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Haciendo que se siente o se acueste para descansar durante el día?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDesncanso">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Haciendo que le resulte difícil caminar o subir escaleras? </label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificCaminar">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Dificultando el trabajo en casa o en el jardín.</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificJardin">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Dificultandole ir a lugares fuera de la  casa?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificAfuera">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Dificultandole dormir bien por la noche? </label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificDormir">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Dificultando la relación o las actividades con sus amigos o su familia?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificSocial">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Dificulta su trabajo para ganarse la vida?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificTrabajo">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Dificultando sus pasatiempos, deportes o aficiones?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificHobbie">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Dificultando sus actividades sexuales?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificSexual">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le hace comer menos de los alimentos que le gustan?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificCoidas">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le hace perder la respiración?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDificRespir">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Se siente cansado, fatigado o con poca energía?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrFatiga">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le hace permanecer en un hospital?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrHospital">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le cuesta dinero la atención médica?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrCostoMedico">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Producirle efectos secundarios de los medicamentos?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrEfectoSecund">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le hace sentir que es una carga para su familia o amigos?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrCargaFamili">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le hace sentir una pérdida de autocontrol en su vida?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrAutoControl">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le hace preocuparse?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrPreocuparse">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">Le hace difícil concentrarse o recordar cosas?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrConcentrarse">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userMovilidad" class="siam-input-label">¿Le hace sentirse deprimido?</label>
+                        <select id="userMovilidad" class="form-control siam-select-input" formControlName="attrDepresion">
+                            <option [value]="conceptosService.getNotValidId()" hidden>Seleccionar</option>
+                            <option *ngFor="let valorLHF of conceptosService.conceptosLHF" [value]="valorLHF.conNumero">{{valorLHF.conNombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <Button [disabled]="!flagCabmiaValorEncuesta" *ngIf="!flagEditarEncuesta" class="btn btn-primary btn-lg siam-button" type="submit"> Guardar </Button>
+
+            <div class="row">
+                <div class="col">
+
+                    <Button *ngIf="flagEditarEncuesta" class="btn btn-primary btn-lg siam-button" type="submit"> Actualizar </Button>
+
+                </div>
+                <div class="col">
+
+                    <Button *ngIf="flagEditarEncuesta" (click)="limpiarEncuesta()" class="btn btn-primary btn-lg siam-button"> Cancelar </Button>
+
+                </div>
+            </div>
+
+
+
+        </form>
+        <br>
+
+    </div>
+</div>
