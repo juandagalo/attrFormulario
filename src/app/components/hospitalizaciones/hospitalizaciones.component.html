@@ -46,13 +46,21 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="userFechaIngresoUltHsptzn" class="siam-input-label">Fecha del ingreso a ultima hospitalización</label>
-                            <input type="text" class="form-control siam-text-input-id" id="userFechaIngresoUltHsptzn" formControlName="attrIngresoUltimaHosp">
+                            <div>
+                                <input matInput [matDatepicker]="pickerIngresoUltimaHosp" class="form-control siam-text-input-id" formControlName="attrIngresoUltimaHosp" id="userFechaIngresoUltHsptzn" style="display: inline; width: 90%;">
+                                <mat-datepicker-toggle matSuffix [for]="pickerIngresoUltimaHosp"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerIngresoUltimaHosp></mat-datepicker>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="userFechaEgresoUltHsptzn" class="siam-input-label">Fecha de egreso de la ultima hospitalización</label>
-                            <input type="text" class="form-control siam-text-input-id" id="userFechaEgresoUltHsptzn" formControlName="attrEgresoUltimaHosp">
+                            <div>
+                                <input matInput [matDatepicker]="pickerEgresoUltimaHosp" class="form-control siam-text-input-id" formControlName="attrEgresoUltimaHosp" id="userFechaEgresoUltHsptzn" style="display: inline; width: 90%;">
+                                <mat-datepicker-toggle matSuffix [for]="pickerEgresoUltimaHosp"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerEgresoUltimaHosp></mat-datepicker>
+                            </div>
                         </div>
                     </div>
                 </div>

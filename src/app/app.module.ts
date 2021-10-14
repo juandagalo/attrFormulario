@@ -9,7 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -59,7 +59,7 @@ import { ComorbilidadPipe } from './pipes/comorbilidad.pipe';
     NoopAnimationsModule,
     MatDatepickerModule,
     MatInputModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     NgbModule,
     NgSelectModule
   ],

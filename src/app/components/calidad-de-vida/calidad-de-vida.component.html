@@ -32,7 +32,11 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userVisitaControl" class="siam-input-label">Fecha de visita control</label>
-                        <input type="text" class="form-control siam-text-input-id" id="userVisitaControl" formControlName="attrFechaControlCalidad">
+                        <div>
+                            <input matInput [matDatepicker]="pickerFechaControlCalidad" class="form-control siam-text-input-id" formControlName="attrFechaControlCalidad" id="userVisitaControl" style="display: inline; width: 90%;">
+                            <mat-datepicker-toggle matSuffix [for]="pickerFechaControlCalidad"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerFechaControlCalidad></mat-datepicker>
+                        </div>
                     </div>
                 </div>
             </div>

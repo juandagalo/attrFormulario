@@ -66,7 +66,12 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userConsultDate" class="siam-input-label">Fecha de primera consulta en el programa de falla cardíaca </label>
-                        <input type="text" class="form-control siam-text-input-id" id="userConsultDate" formControlName="AttrFechaPrimConsul">
+                        <div>
+                            <input matInput [matDatepicker]="pickerFechaPrimConsul" class="form-control siam-text-input-id" formControlName="AttrFechaPrimConsul" id="userConsultDate" style="display: inline; width: 60%;">
+                            <mat-datepicker-toggle matSuffix [for]="pickerFechaPrimConsul"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerFechaPrimConsul></mat-datepicker>
+                        </div>
+
                     </div>
                 </div>
 
@@ -289,7 +294,12 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userFechaAttr" class="siam-input-label"> Fecha de diagnóstico de ATTR</label>
-                        <input type="text" class="form-control siam-text-input-id" id="userFechaAttr" formControlName="AttrFechaAttrCm">
+                        <div>
+                            <input matInput [matDatepicker]="pickerFechaAttrCm" class="form-control siam-text-input-id" formControlName="AttrFechaAttrCm" id="userFechaAttr" style="display: inline; width: 90%;">
+                            <mat-datepicker-toggle matSuffix [for]="pickerFechaAttrCm"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerFechaAttrCm></mat-datepicker>
+                        </div>
+
                     </div>
                 </div>
 
