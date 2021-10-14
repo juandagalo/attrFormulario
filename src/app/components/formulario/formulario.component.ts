@@ -8,6 +8,8 @@ import { Hospitalizacion } from 'src/app/models/hospitalizaciones';
 import { Encuesta } from 'src/app/models/encuesta';
 import { CalidadVida } from 'src/app/models/calidadVida';
 import { Biomarcador } from 'src/app/models/biomarcador';
+import { Comorbilidad } from 'src/app/models/comorbildad';
+
 //Services
 import { BiomarcadoresService } from 'src/app/services/biomarcadores.service';
 import { CalidadVidaService } from 'src/app/services/calidad-vida.service';
@@ -15,6 +17,7 @@ import { EncuestasService } from 'src/app/services/encuestas.service';
 import { HospitalizacionesService } from 'src/app/services/hospitalizaciones.service';
 import { PacientesService } from 'src/app/services/pacientes.service';
 import { ConceptosService } from 'src/app/services/conceptos.service';
+import { ComorbilidadesService } from '../../services/comorbilidades.service';
 
 
 @Component({
@@ -32,17 +35,19 @@ export class FormularioComponent implements OnInit {
 	encuestas: Encuesta[]						= [];
 	calidadesVida: CalidadVida[]				= [];
 	biomarcadores: Biomarcador[]				= [];
+	comorbilidades: Comorbilidad[]				= [];
 
 	pacienteEdad: number;
 	flagExistePaciente: boolean;
 
-	constructor( private  	router:	Router,
-	             public  	conceptosService: ConceptosService,
-	             public 	pacientesService:	PacientesService,
-				 public		hospitalizacionesService: HospitalizacionesService,
-				 public		encuestaService: EncuestasService,
-				 public		calidadVidaService: CalidadVidaService,
-				 public 	biomarcadoresServices: BiomarcadoresService) 
+	constructor(private  	router:	Router,
+				private  	conceptosService: ConceptosService,
+				private 	pacientesService:	PacientesService,
+				private		hospitalizacionesService: HospitalizacionesService,
+				private		encuestaService: EncuestasService,
+				private		calidadVidaService: CalidadVidaService,
+				private 	biomarcadoresServices: BiomarcadoresService,
+				private 	comorbilidadesService: ComorbilidadesService) 
 	{
 	
 		// Se obtiene la información de la ruta
@@ -65,6 +70,7 @@ export class FormularioComponent implements OnInit {
 				this.obtenerEncuestas();
 				this.obtenerCalidadVida();
 				this.obtenerBiomarcadores();
+				this.obtenerComorbilidades();
 			
 			},
 			(error) => {
@@ -126,6 +132,21 @@ export class FormularioComponent implements OnInit {
 			data => {
 				
 				this.encuestas = data as Encuesta[];
+			},
+			(error)=>{
+
+				console.log(error);
+
+			}
+		);
+	}
+
+	obtenerComorbilidades(): void{
+
+		this.comorbilidadesService.obtenerComorbilidades(this.pacienteAttr.attrNumero).subscribe(
+			data => {
+				
+				this.comorbilidades = data as Comorbilidad[];
 			},
 			(error)=>{
 

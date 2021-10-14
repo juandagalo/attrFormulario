@@ -33,7 +33,7 @@ export class HospitalizacionesComponent implements OnChanges {
 		this.crearFormularios();
 	}
 
-  crearFormularios():void{
+  	crearFormularios():void{
 
 		this.hospitalizacionForm = this.formBuilder.group({
 			attrIngresoUltimaHosp: ['',Validators.required],

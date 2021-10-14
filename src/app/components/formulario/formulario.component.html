@@ -3,7 +3,7 @@
 <br>
 
 <app-formulario-persona [hisPaciente]="hisPaciente" [pacienteEdad]="pacienteEdad" [conceptos]="conceptos" [pacienteAttr]="pacienteAttr" flagExistePaciente="flagExistePaciente"></app-formulario-persona>
-
+<!-- 
 <div class="col">
     <div class="form-group">
         <label for="userComorbidity" class="siam-input-label">Comorbilidades</label>
@@ -12,8 +12,13 @@
       <option *ngFor="let concepto of conceptosService.conceptosComorbilidad" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
     </select>
     </div>
-</div>
+</div> -->
 
+<app-comorbilidades [comorbilidades]="comorbilidades" [hisPaciente]="hisPaciente" [pacienteAttr]="pacienteAttr"></app-comorbilidades>
+
+
+<br>
+<br>
 
 <app-biomarcadores [biomarcadores]="biomarcadores" [hisPaciente]="hisPaciente" [pacienteAttr]="pacienteAttr"></app-biomarcadores>
 

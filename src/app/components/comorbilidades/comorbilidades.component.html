@@ -1,0 +1,70 @@
+<div class="card siam-panel">
+    <h5 class="card-header siam-panel-head siam-title">Comorbilidades</h5>
+    <div class="card-body siam-panel-body">
+        <table class="table" *ngIf="comorbilidades.length > 0">
+            <thead>
+                <tr>
+                    <th scope="col" class="table-header">#</th>
+                    <th scope="col" class="table-header">Fecha de registro</th>
+                    <th scope="col" class="table-header">Descripción</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let comorbilidad of comorbilidades; let i = index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{comorbilidad.createDate | date:'dd/MM/YYYY'}}</td>
+                    <td>{{comorbilidad.attrComorb | comorbilidad}}</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+        <br>
+        <div class="row">
+
+            <div class="col">
+
+                <div class="form-group">
+                    <Button *ngIf="!tieneComorbilidad" class="btn btn-primary btn-lg siam-button" (click)="mostrarComorbilidad(true)"> Nueva Comorbilidad </Button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="tieneComorbilidad">
+
+            <form [formGroup]="comorbilidadForm" (ngSubmit)="guardarComorbilidad()">
+
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userComorbidity" class="siam-input-label">Comorbilidades</label>
+                        <select id="userComorbidity" class="form-control siam-select-input" formControlName="attrComorb">
+                            <option selected hidden>Seleccionar</option>
+                            <option *ngFor="let concepto of conceptosService.conceptosComorbilidad" [value]="concepto.conNumero">{{ concepto.conNombre }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+
+                        <Button [disabled]="comorbilidadForm.invalid" type="submit" class="btn btn-primary btn-lg siam-button"> Guardar </Button>
+
+                    </div>
+                    <div class="col">
+
+                        <Button class="btn btn-primary btn-lg siam-button" (click)="mostrarComorbilidad(false)"> Cancelar </Button>
+
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- <Button *ngIf="tieneHospitalizacionesFCardiaca" class="btn btn-primary btn-lg siam-button">Agregar</Button> -->
+    </div>
+</div>

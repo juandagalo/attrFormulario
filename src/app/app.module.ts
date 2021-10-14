@@ -27,6 +27,8 @@ import { EncuestaTerminadaPipe } from './pipes/encuesta-terminada.pipe';
 import { DatePipe } from '@angular/common';
 import { HospitalizacionPipe } from './pipes/hospitalizacion.pipe';
 import { EncuestaAttrComponent } from './components/encuesta-attr/encuesta-attr.component';
+import { ComorbilidadesComponent } from './components/comorbilidades/comorbilidades.component';
+import { ComorbilidadPipe } from './pipes/comorbilidad.pipe';
 
 
 
@@ -45,7 +47,9 @@ import { EncuestaAttrComponent } from './components/encuesta-attr/encuesta-attr.
     BiomarcadoresComponent,
     HospitalizacionesComponent,
     CalidadDeVidaComponent,
-    EncuestaAttrComponent
+    EncuestaAttrComponent,
+    ComorbilidadesComponent,
+    ComorbilidadPipe
   ],
   imports: [
     BrowserModule,
