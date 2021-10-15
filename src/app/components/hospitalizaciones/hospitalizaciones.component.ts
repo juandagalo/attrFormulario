@@ -9,6 +9,7 @@ import { PacienteAttr } from 'src/app/models/pacienteAttr';
 //Services
 import { HospitalizacionesService } from 'src/app/services/hospitalizaciones.service';
 import { ConceptosService } from 'src/app/services/conceptos.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-hospitalizaciones',
@@ -26,6 +27,7 @@ export class HospitalizacionesComponent implements OnChanges {
 	@Input() pacienteAttr: PacienteAttr 		= {} as PacienteAttr;
 
   	constructor(private 	formBuilder: FormBuilder,
+				private		toastr:ToastrService,
 				public		hospitalizacionesService: HospitalizacionesService,
 				public  	conceptosService: ConceptosService) { }
 
@@ -51,8 +53,11 @@ export class HospitalizacionesComponent implements OnChanges {
 				this.obtenerHospitalizaciones();
 				this.hospitalizacionForm.reset();
 				this.tieneHospitalizacionesFCardiaca = false;
+				this.toastr.success('Registro gregado', 'El registro fue agregado correctamente');
+
 			},
 			error => {
+				this.toastr.error('Error', 'Hubo un error al crear el registro');
 				console.log(error);	
 			}
 		);

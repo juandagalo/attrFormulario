@@ -29,6 +29,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.16.2",
     "moment": "^2.29.1",
+    "ngx-toastr": "^13.2.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",

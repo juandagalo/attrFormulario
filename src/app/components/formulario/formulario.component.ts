@@ -38,10 +38,9 @@ export class FormularioComponent implements OnInit {
 	comorbilidades: Comorbilidad[]				= [];
 
 	pacienteEdad: number;
-	flagExistePaciente: boolean;
+	flagExistePaciente: boolean					= false;
 
 	constructor(private  	router:	Router,
-				private  	conceptosService: ConceptosService,
 				private 	pacientesService:	PacientesService,
 				private		hospitalizacionesService: HospitalizacionesService,
 				private		encuestaService: EncuestasService,
@@ -77,6 +76,7 @@ export class FormularioComponent implements OnInit {
 				console.log(error);
 				
 				this.pacienteAttr  = {} as PacienteAttr;
+				this.flagExistePaciente = false;
 			
 			}
 		);

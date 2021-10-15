@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Comorbilidad } from 'src/app/models/comorbildad';
 import { hisPaciente } from 'src/app/models/hisPaciente';
 import { PacienteAttr } from 'src/app/models/pacienteAttr';
@@ -22,6 +23,7 @@ export class ComorbilidadesComponent implements OnChanges {
 	@Input() pacienteAttr: PacienteAttr 		= {} as PacienteAttr;
 
 	constructor(private 	formBuilder: FormBuilder,
+				private		toastr:ToastrService,
 				public		comorbilidadesService: ComorbilidadesService,
 				public  	conceptosService: ConceptosService) { }
 
@@ -44,9 +46,11 @@ export class ComorbilidadesComponent implements OnChanges {
 				this.obtenerComorbilidades();
 				this.comorbilidadForm.reset();
 				this.tieneComorbilidad = false;
+				this.toastr.success('Registro gregado', 'El registro fue agregado correctamente');
+
 			},
 			error => {
-				console.log(error);	
+				this.toastr.error('Error', 'Hubo un error al crear el registro');	
 			}
 		);
 	}

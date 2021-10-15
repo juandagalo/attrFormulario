@@ -8,8 +8,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -61,7 +63,9 @@ import { ComorbilidadPipe } from './pipes/comorbilidad.pipe';
     MatInputModule,
     MatMomentDateModule,
     NgbModule,
-    NgSelectModule
+    NgSelectModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

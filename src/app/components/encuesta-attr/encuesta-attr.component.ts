@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 //Models
 import { Encuesta } from 'src/app/models/encuesta';
 import { hisPaciente } from 'src/app/models/hisPaciente';
@@ -25,6 +26,7 @@ export class EncuestaAttrComponent implements OnChanges {
 	@Input() pacienteAttr: PacienteAttr 		= {} as PacienteAttr;
 
 	constructor(private 	formBuilder: FormBuilder,
+				private		toastr:ToastrService,
 				public		encuestaService: EncuestasService,
 				public  	conceptosService: ConceptosService) { }
 	
@@ -90,9 +92,11 @@ export class EncuestaAttrComponent implements OnChanges {
 					this.obtenerEncuestas();
 					this.limpiarEncuesta();
 					this.flagCabmiaValorEncuesta = false;
+					this.toastr.success('Registro gregado', 'El registro fue agregado correctamente');
 				},
 				error => {
 					console.log(error);	
+					this.toastr.error('Error', 'Hubo un error al crear el registro');
 				}
 			);
 
@@ -103,9 +107,11 @@ export class EncuestaAttrComponent implements OnChanges {
 					this.limpiarEncuesta();
 					this.flagEditarEncuesta = false;
 					this.flagCabmiaValorEncuesta = false;
+					this.toastr.success('Registro actualizado', 'El registro fue actualizado correctamente');
+
 				},
 				error => {
-					console.log(error);	
+					this.toastr.error('Error', 'Hubo un error al actualizar el registro');
 				}
 			);
 		}

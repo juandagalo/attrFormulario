@@ -7,6 +7,8 @@ import { PacienteAttr } from 'src/app/models/pacienteAttr';
 //Services
 import { CalidadVidaService } from 'src/app/services/calidad-vida.service';
 import { ConceptosService } from 'src/app/services/conceptos.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-calidad-de-vida',
@@ -22,6 +24,7 @@ export class CalidadDeVidaComponent implements OnChanges {
 	@Input() pacienteAttr: PacienteAttr 		= {} as PacienteAttr;
 
   	constructor(private 	formBuilder: FormBuilder,
+				private		toastr:ToastrService,
 				public		calidadVidaService: CalidadVidaService,
 				public  	conceptosService: ConceptosService) { }
 
@@ -46,9 +49,10 @@ export class CalidadDeVidaComponent implements OnChanges {
 			data => {
 				this.obtenerCalidadVida();
 				this.limpiarCalidadVida();
+				this.toastr.success('Registro gregado', 'El registro fue agregado correctamente');
 			},
 			error => {
-				console.log(error);	
+				this.toastr.error('Error', 'Hubo un error al crear el registro');
 			}
 		);
 	}

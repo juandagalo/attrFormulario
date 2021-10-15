@@ -8,6 +8,7 @@ import { Concepto } from 'src/app/models/concepto';
 //Services
 import { ConceptosService } from 'src/app/services/conceptos.service';
 import { PacientesService } from 'src/app/services/pacientes.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-formulario-persona',
@@ -38,6 +39,7 @@ export class FormularioPersonaComponent implements OnChanges {
 	loaded: boolean								= false;
 
 	constructor(private		formBuilder: FormBuilder,
+				private		toastr:ToastrService,
 				public		conceptosService: ConceptosService,
 				public		pacientesService: PacientesService) { }
   
@@ -160,21 +162,30 @@ export class FormularioPersonaComponent implements OnChanges {
 
 		const pacienteAttr: PacienteAttr = this.crearPacienteAttr();
 
+		// console.log(pacienteAttr);
+		
+
+		// return true;
+
 		if (!this.flagExistePaciente) {
 			
-			this.pacientesService.guardarPacienteAttr(pacienteAttr).subscribe((data: any) => {
-
-				// this.loading = false;
-				
-			});
+			this.pacientesService.guardarPacienteAttr(pacienteAttr).subscribe(
+				(data: any) => {
+					this.toastr.success('Paciente agregado', 'El paciente fue agregado correctamente');
+				},
+				error => {
+					this.toastr.error('Error', 'Hubo un error al crear al paciente')	
+				});
 
 		}else{
 			
-			this.pacientesService.actualizarPacienteAttr(pacienteAttr).subscribe((data: any) => {
-
-				// this.loading = false;
-				
-			});
+			this.pacientesService.actualizarPacienteAttr(pacienteAttr).subscribe(
+				(data: any) => {
+					this.toastr.success('Paciente actualizado', 'El paciente fue actualizado correctamente');
+				},
+				error => {
+					this.toastr.error('Error', 'Hubo un error al actualizar al paciente');
+				});
 		}
 		
 	}
