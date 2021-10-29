@@ -2,15 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Encuesta } from '../models/encuesta';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncuestasService {
-  apUrl 					= 'https://localhost:44377/';
-  apiUrl 					= 'api/Pacientes/';
-  userId 					= '?UserId=1';
+  apUrl 					= environment.appUrl;
+  apiUrl 					= environment.apiUrl;
+  userId 					= environment.userId;
   encuenstas: Encuesta[];
 
   constructor(private http: HttpClient) { }

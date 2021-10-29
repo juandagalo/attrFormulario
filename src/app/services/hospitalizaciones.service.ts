@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Hospitalizacion } from '../models/hospitalizaciones';
 import { map } from "rxjs/operators";
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HospitalizacionesService {
-  apUrl 					= 'https://localhost:44377/';
-  apiUrl 					= 'api/Pacientes/';
-  userId 					= '?UserId=1';
+  apUrl 					= environment.appUrl;
+  apiUrl 					= environment.apiUrl;
+  userId 					= environment.userId;
   hospitalizaciones: Hospitalizacion[];
   constructor(private http: HttpClient) { }
 

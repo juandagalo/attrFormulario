@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Concepto } from 'src/app/models/concepto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConceptosService {
 
-  apUrl 					= 'https://localhost:44377/';
-  apiUrl 					= 'api/Pacientes/';
-  userId 					= '?UserId=1';
+  apUrl 					= environment.appUrl;
+  apiUrl 					= environment.apiUrl;
+  userId 					= environment.userId;
   conceptos: Concepto[];
   conceptosTi: any[];
   conceptosEtnia: any[];

@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Comorbilidad } from '../models/comorbildad';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComorbilidadesService {
-  apUrl 					= 'https://localhost:44377/';
-  apiUrl 					= 'api/Pacientes/';
-  userId 					= '?UserId=1';
+  apUrl 					= environment.appUrl;
+  apiUrl 					= environment.apiUrl;
+  userId 					= environment.userId;
   hospitalizaciones: Comorbilidad[];
   constructor(private http: HttpClient) { }
 

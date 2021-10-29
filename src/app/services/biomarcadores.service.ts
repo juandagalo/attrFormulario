@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Biomarcador } from '../models/biomarcador';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BiomarcadoresService {
-  apUrl 					= 'https://localhost:44377/';
-  apiUrl 					= 'api/Pacientes/';
-  userId 					= '?UserId=1';
+  apUrl 					= environment.appUrl;
+  apiUrl 					= environment.apiUrl;
+  userId 					= environment.userId;
   encuenstas: Biomarcador[];
 
   constructor(private http: HttpClient) { }

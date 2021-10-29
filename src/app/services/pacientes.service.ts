@@ -4,14 +4,15 @@ import { Observable } from 'rxjs';
 import { hisPaciente } from '../models/hisPaciente';
 import { PacienteAttr } from '../models/pacienteAttr';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PacientesService {
-  apUrl = 'https://localhost:44377/';
-  apiUrl = 'api/Pacientes/';
-  userId = '?UserId=1';
+	apUrl 					= environment.appUrl;
+	apiUrl 					= environment.apiUrl;
+	userId 					= environment.userId;
   hisPacientes: hisPaciente[] = [];
   pacienteAttr: any = {};
 
