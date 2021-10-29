@@ -58,7 +58,6 @@ export class HospitalizacionesComponent implements OnChanges {
 			},
 			error => {
 				this.toastr.error('Error', 'Hubo un error al crear el registro');
-				console.log(error);	
 			}
 		);
 	}

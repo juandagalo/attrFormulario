@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 //Models
 import { Biomarcador } from 'src/app/models/biomarcador';
 import { hisPaciente } from 'src/app/models/hisPaciente';
@@ -23,6 +24,7 @@ export class BiomarcadoresComponent implements OnChanges {
 	@Input() pacienteAttr: PacienteAttr 		= {} as PacienteAttr;
 
   	constructor(private 	formBuilder: FormBuilder,
+				private		toastr:ToastrService,
 				public 		biomarcadoresServices: BiomarcadoresService) { }
 
   	ngOnChanges(changes: SimpleChanges): void {
@@ -43,9 +45,11 @@ export class BiomarcadoresComponent implements OnChanges {
 			data => {
 				this.obtenerBiomarcadores();
 				this.limpiarBiomarcadores();
+				this.toastr.success('Registro gregado', 'El registro fue agregado correctamente');
 			},
 			error => {
 				console.log(error);	
+				this.toastr.error('Error', 'Hubo un error al crear el registro');
 			}
 		);
 	}

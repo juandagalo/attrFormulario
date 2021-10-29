@@ -75,9 +75,9 @@ export class EncuestaAttrComponent implements OnChanges {
 		this.encuestaForm.valueChanges.subscribe(x => {
 			this.flagCabmiaValorEncuesta = true;
 		})
-	
-
 		
+		this.limpiarEncuesta();
+	
 	}
 
 	guardarEncuesta(){

@@ -106,10 +106,12 @@ export class FormularioPersonaComponent implements OnChanges {
 
 		this.attrForm.get('AttrAttrCm').valueChanges.subscribe(val => {
 
-			if (val != this.conceptosService.conceptosNo.conNumero) {
-				this.mostrarAttr(true);
-			}else{
+			if (val == this.conceptosService.conceptosNo.conNumero) {
+
 				this.mostrarAttr(false);
+			}else{
+
+				this.mostrarAttr(true);
 			}
 		});
 
@@ -119,6 +121,16 @@ export class FormularioPersonaComponent implements OnChanges {
 				this.otraInvervencionFarmacologica(true);
 			}else{
 				this.otraInvervencionFarmacologica(false);
+			}
+		});
+
+		this.attrForm.get('AttrResoNucleGodolinio').valueChanges.subscribe(val => {
+
+			if (val == this.conceptosService.conceptosGodoliAnorm.conNumero) {
+				this.mostrarResonanciaMagnetica(true);
+				
+			}else{
+				this.mostrarResonanciaMagnetica(false);
 			}
 		});
 
@@ -140,8 +152,8 @@ export class FormularioPersonaComponent implements OnChanges {
 			AttrOtroTipoManifestExtracardiaca: [''],
 			AttrManifestElectro: ['', Validators.required],
 			AttrGrosorVentri: ['', Validators.required],
-			AttrFracEyecc: ['',Validators.max(1)],
-			AttrDeformLong: ['',Validators.max(1)],
+			AttrFracEyecc: ['',[Validators.min(0),Validators.max(100)]],
+			AttrDeformLong: ['',[Validators.min(-100),Validators.max(100)]],
 			AttrResoNucleGodolinio: ['', Validators.required],
 			AttrTipoAnormGadolinio: [''],
 			AttrGammagr: ['', Validators.required],
@@ -161,11 +173,6 @@ export class FormularioPersonaComponent implements OnChanges {
   guadarPaciente(){
 
 		const pacienteAttr: PacienteAttr = this.crearPacienteAttr();
-
-		// console.log(pacienteAttr);
-		
-
-		// return true;
 
 		if (!this.flagExistePaciente) {
 			
@@ -316,6 +323,11 @@ export class FormularioPersonaComponent implements OnChanges {
 	
 
 	mostrarAttr(tieneAtter: boolean): void{
+		if (!tieneAtter) {
+			this.attrForm.controls['AttrFechaAttrCm'].setValue(new Date("01/01/1999"));
+			this.attrForm.controls['AttrTipoAttrCm'].setValue(this.conceptosService.getNotValidId());
+		}
+
 		this.tieneAtter = tieneAtter;
 	}
 

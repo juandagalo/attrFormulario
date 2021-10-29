@@ -152,6 +152,16 @@
                     </div>
                 </div>
 
+                <div class="col">
+                    <div class="form-group">
+                        <label for="userManifestacioneselectrocardiograficas" class="siam-input-label">Manifestaciones electrocardiográficas</label>
+                        <select id="userManifestacioneselectrocardiograficas" class="form-control siam-select-input" formControlName="attrManifestElectro">
+                          <option hidden>Seleccionar</option>
+                          <option *ngFor="let concepto of conceptosService.conceptosManifesElectro" [value]="concepto.conNumero" >{{ concepto.conNombre }}</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
             <br>
 
@@ -289,7 +299,7 @@
 
             </div>
 
-            <div class="row" *ngIf="tieneAtter || pacienteAttr.attrAttrCm == conceptosService.conceptosNo.conNumero">
+            <div class="row" *ngIf="tieneAtter || pacienteAttr.attrAttrCm != conceptosService.conceptosNo.conNumero">
 
                 <div class="col">
                     <div class="form-group">
@@ -360,8 +370,8 @@
     <br>
     <br>
 
-    <button *ngIf="!flagExistePaciente" class="btn btn-primary btn-lg siam-button siam-buttons-box" type="submit"> Guardar información del paciente </button>
-    <button *ngIf="flagExistePaciente" class="btn btn-primary btn-lg siam-button siam-buttons-box" type="submit"> Actualizar información del paciente </button>
+    <button *ngIf="!flagExistePaciente" [disabled]="attrForm.invalid" class="btn btn-primary btn-lg siam-button siam-buttons-box" type="submit"> Guardar información del paciente </button>
+    <button *ngIf="flagExistePaciente" [disabled]="attrForm.invalid" class="btn btn-primary btn-lg siam-button siam-buttons-box" type="submit"> Actualizar información del paciente </button>
 
     <br>
     <hr>

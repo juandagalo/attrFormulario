@@ -31,6 +31,7 @@ import { HospitalizacionPipe } from './pipes/hospitalizacion.pipe';
 import { EncuestaAttrComponent } from './components/encuesta-attr/encuesta-attr.component';
 import { ComorbilidadesComponent } from './components/comorbilidades/comorbilidades.component';
 import { ComorbilidadPipe } from './pipes/comorbilidad.pipe';
+import { ModalComorbilidadConfirmacionComponent } from './components/modal-comorbilidad-confirmacion/modal-comorbilidad-confirmacion.component';
 
 
 
@@ -51,7 +52,8 @@ import { ComorbilidadPipe } from './pipes/comorbilidad.pipe';
     CalidadDeVidaComponent,
     EncuestaAttrComponent,
     ComorbilidadesComponent,
-    ComorbilidadPipe
+    ComorbilidadPipe,
+    ModalComorbilidadConfirmacionComponent
   ],
   imports: [
     BrowserModule,

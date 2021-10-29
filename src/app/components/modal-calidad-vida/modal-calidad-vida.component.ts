@@ -8,7 +8,8 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-modal-calidad-vida',
   templateUrl: './modal-calidad-vida.component.html',
-  styleUrls: []
+  styleUrls: [],
+  providers: [NgbModal]
 })
 export class ModalCalidadVidaComponent implements OnInit {
 

@@ -1,0 +1,17 @@
+<ng-template #content let-d="dismiss">
+    <div class="modal-header">
+
+    </div>
+    <div class="modal-body">
+        <p>¿Seguro de su elección?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-lg siam-button" (click)="close()">Guardar</button>
+        <button type="button" class="btn btn-primary btn-lg siam-button" (click)="d('Cross click')">
+            <!-- <span aria-hidden="true">&times;</span> -->
+            Cancelar
+        </button>
+    </div>
+</ng-template>
+
+<button type="button" [disabled]="formularioCorrecto" class="btn btn-primary btn-lg siam-button" (click)="open(content)">Guardar</button>

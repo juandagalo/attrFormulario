@@ -21,9 +21,11 @@ export class ConceptosService {
   conceptosSindClinico: any[];
   conceptosOtroSindClinico: any;
   conceptosManifesCardi: any;
+  conceptosManifesElectro: any;
   conceptosOtraManifesCardi: any;
   conceptosResMagGodoli: any[];
   conceptosTipMagGodoli: any[];
+  conceptosGodoliAnorm: any;
   conceptosGammagrafia: any[];
   conceptosTipoAttr: any[];
   conceptosInterFamaco: any[];
@@ -61,8 +63,11 @@ export class ConceptosService {
                     this.conceptosManifesCardi 		    = this.conceptos.filter(obj => obj.conTipo.trim() === 'TME');
                     this.conceptosOtraManifesCardi 		= this.conceptosManifesCardi// tslint:disable-next-line: indent
 															.filter(obj => obj.conCodigo.trim() === 'TOTR')[0];
+                    this.conceptosManifesElectro 		    = this.conceptos.filter(obj => obj.conTipo.trim() === 'MEG');
+
                     this.conceptosResMagGodoli 		    = this.conceptos.filter(obj => obj.conTipo.trim() === 'RMNG');
                     this.conceptosTipMagGodoli 		    = this.conceptos.filter(obj => obj.conTipo.trim() === 'TRMN');
+                    this.conceptosGodoliAnorm 		    = this.conceptosResMagGodoli.filter(obj => obj.conCodigo.trim() === 'RANM')[0];
                     this.conceptosGammagrafia 		    = this.conceptos.filter(obj => obj.conTipo.trim() === 'GPTP');
                     this.conceptosTipoAttr 			    = this.conceptos.filter(obj => obj.conTipo.trim() === 'TATR');
                     this.conceptosInterFamaco 		    = this.conceptos.filter(obj => obj.conTipo.trim() === 'IFM');
