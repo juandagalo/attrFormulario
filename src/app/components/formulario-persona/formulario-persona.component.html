@@ -145,7 +145,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col" *ngIf="tieneOtrasManifestacionesExtracardiacas || pacienteAttr.attrTipoManifestExtracardiaca == conceptosService.conceptosOtraManifesCardi.conNumero">
+                <div class="col" *ngIf="tieneOtrasManifestacionesExtracardiacas && pacienteAttr.attrTipoManifestExtracardiaca == conceptosService.conceptosOtraManifesCardi.conNumero">
                     <div class="form-group">
                         <label for="userManifestacionesExtracardiacasOtroTipo" class="siam-input-label">¿Cual?</label>
                         <input type="text" class="form-control siam-text-input-id" id="userManifestacionesExtracardiacasOtroTipo" formControlName="AttrOtroTipoManifestExtracardiaca">
@@ -155,7 +155,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userManifestacioneselectrocardiograficas" class="siam-input-label">Manifestaciones electrocardiográficas</label>
-                        <select id="userManifestacioneselectrocardiograficas" class="form-control siam-select-input" formControlName="attrManifestElectro">
+                        <select id="userManifestacioneselectrocardiograficas" class="form-control siam-select-input" formControlName="AttrManifestElectro">
                           <option hidden>Seleccionar</option>
                           <option *ngFor="let concepto of conceptosService.conceptosManifesElectro" [value]="concepto.conNumero" >{{ concepto.conNombre }}</option>
                         </select>
@@ -196,13 +196,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="userEjectionFraction" class="siam-input-label">Fracción de eyección</label>
-                        <input type="number" class="form-control siam-text-input-id" id="userEjectionFraction" formControlName="AttrFracEyecc">
+                        <input appPorcentaje type="text" class="form-control siam-text-input-id" id="userEjectionFraction" formControlName="AttrFracEyecc" (keypress)="keyPressNumbersWithDecimal($event)">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="userTroponinT" class="siam-input-label">Deformación longitudinal apical</label>
-                        <input type="number" class="form-control siam-text-input-id" id="userTroponinT" formControlName="AttrDeformLong">
+                        <input appPorcentaje type="text" class="form-control siam-text-input-id" id="userTroponinT" formControlName="AttrDeformLong" (keypress)="keyPressNumbersWithDecimal($event)">
                     </div>
                 </div>
 

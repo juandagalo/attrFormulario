@@ -32,6 +32,7 @@ import { EncuestaAttrComponent } from './components/encuesta-attr/encuesta-attr.
 import { ComorbilidadesComponent } from './components/comorbilidades/comorbilidades.component';
 import { ComorbilidadPipe } from './pipes/comorbilidad.pipe';
 import { ModalComorbilidadConfirmacionComponent } from './components/modal-comorbilidad-confirmacion/modal-comorbilidad-confirmacion.component';
+import { PorcentajeDirective } from './directives/porcentaje.directive';
 
 
 
@@ -53,7 +54,8 @@ import { ModalComorbilidadConfirmacionComponent } from './components/modal-comor
     EncuestaAttrComponent,
     ComorbilidadesComponent,
     ComorbilidadPipe,
-    ModalComorbilidadConfirmacionComponent
+    ModalComorbilidadConfirmacionComponent,
+    PorcentajeDirective
   ],
   imports: [
     BrowserModule,

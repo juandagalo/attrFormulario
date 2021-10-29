@@ -253,8 +253,8 @@ export class FormularioPersonaComponent implements OnChanges {
 			AttrOtroTipoManifestExtracardiaca: 	paciente.attrOtroTipoManifestExtracardiaca,
 			AttrManifestElectro: 				paciente.attrManifestElectro,
 			AttrGrosorVentri: 					paciente.attrGrosorVentri,
-			AttrFracEyecc: 						paciente.attrFracEyecc,
-			AttrDeformLong: 					paciente.attrDeformLong,
+			AttrFracEyecc: 						paciente.attrFracEyecc+"%",
+			AttrDeformLong: 					paciente.attrDeformLong+"%",
 			AttrResoNucleGodolinio: 			paciente.attrResoNucleGodolinio,
 			AttrTipoAnormGadolinio: 			paciente.attrTipoAnormGadolinio,
 			AttrGammagr: 						paciente.attrGammagr,
@@ -338,7 +338,20 @@ export class FormularioPersonaComponent implements OnChanges {
 
 
 	mostrarHospitalizacionesFCardiaca(tieneHospitalizacionesFCardiaca: boolean): void{
-		this.tieneHospitalizacionesFCardiaca = tieneHospitalizacionesFCardiaca;
+		this.
+		tieneHospitalizacionesFCardiaca = tieneHospitalizacionesFCardiaca;
 	}
+
+
+	keyPressNumbersWithDecimal(event) {
+		var charCode = (event.which) ? event.which : event.keyCode;
+		
+		if (charCode != 45 && charCode != 46 && charCode > 31
+		  && (charCode < 48 || charCode > 57)) {
+		  event.preventDefault();
+		  return false;
+		}
+		return true;
+	  }
 
 }
