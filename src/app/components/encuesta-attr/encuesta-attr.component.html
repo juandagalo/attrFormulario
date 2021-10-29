@@ -1,31 +1,29 @@
 <div class="card siam-panel">
     <h5 class="card-header siam-panel-head siam-title">Cuestionario Minnesota Living with Heart Failure (MLFH)</h5>
     <div class="card-body siam-panel-body">
-        <div *ngIf="encuestas.length > 0">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col" class="table-header">#</th>
-                        <th scope="col" class="table-header">Fecha creación encuesta</th>
-                        <th scope="col" class="table-header">Fecha actualización encuesta</th>
-                        <th scope="col" class="table-header">Terminado</th>
-                        <th scope="col" class="table-header">Acción</th>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="table-header">#</th>
+                    <th scope="col" class="table-header">Fecha creación encuesta</th>
+                    <th scope="col" class="table-header">Fecha actualización encuesta</th>
+                    <th scope="col" class="table-header">Terminado</th>
+                    <th scope="col" class="table-header">Acción</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let encuesta of encuestas; let i = index">
-                        <th scope="row">{{ i+1 }}</th>
-                        <td>{{encuesta.createDate | date:'dd/MM/YYYY'}}</td>
-                        <td>{{encuesta.updateDate | date:'dd/MM/YYYY'}}</td>
-                        <td>{{encuesta | encuestaTerminada}}</td>
-                        <td><a (click)="editarEncuesta(encuesta)" class="btn btn-primary btn-lg siam-button">Editar</a></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let encuesta of encuestas; let i = index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{encuesta.createDate | date:'dd/MM/YYYY'}}</td>
+                    <td>{{encuesta.updateDate | date:'dd/MM/YYYY'}}</td>
+                    <td>{{encuesta | encuestaTerminada}}</td>
+                    <td><a (click)="editarEncuesta(encuesta)" class="btn btn-primary btn-lg siam-button">Editar</a></td>
 
-                    </tr>
+                </tr>
 
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
 
         <form [formGroup]="encuestaForm" (ngSubmit)="guardarEncuesta()">
             <input type="text" hidden formControlName="attrEncId">

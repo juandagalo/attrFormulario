@@ -2,8 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ConceptosService } from '../services/conceptos.service';
 
 @Pipe({
-  name: 'encuestaTerminada',
-  pure: false
+  name: 'encuestaTerminada'
 })
 export class EncuestaTerminadaPipe implements PipeTransform {
 
